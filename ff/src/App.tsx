@@ -1,10 +1,10 @@
 import React from "react";
-
+import {Header} from "./Components";
 const App: React.FC = () => {
   return (
-    <div className="App">
-      <h1>Fantasy Football Display </h1>
-    </div>
+    <>
+      <Header />
+    </>
   );
 };
 
