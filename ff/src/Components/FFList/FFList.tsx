@@ -1,23 +1,11 @@
-import React, {useReducer} from "react";
-import reducer from "./reducer";
-import {INITIAL_STATE} from "./constants";
+import React, {useEffect} from "react";
+import {getFantasyFootballData} from "./actions";
+
 const FFList = () => {
-  const [state, dispatch] = useReducer(reducer, INITIAL_STATE);
-  return (
-    <>
-      <button
-        onClick={() => dispatch({type: "INCREMENT", payload: state.count})}
-      >
-        Click To Increment
-      </button>
-      <button
-        onClick={() => dispatch({type: "DECREMENT", payload: state.count})}
-      >
-        Click To Increment
-      </button>
-      <div>Current Count {state.count}</div>
-    </>
-  );
+  useEffect(() => {
+    getFantasyFootballData();
+  }, []);
+  return <></>;
 };
 
 export default FFList;
