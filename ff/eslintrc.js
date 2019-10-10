@@ -1,7 +1,7 @@
 module.exports = {
   parser: "@typescript-eslint/parser", // Specifies the ESLint parser
-  plugins: ["@typescript-eslint"],
-  extends: ["airbnb"],
+  plugins: ["@typescript-eslint", "prettier"],
+  extends: ["airbnb-base","airbnb", "prettier/recommended", "prettier"],
   parserOptions: {
     ecmaVersion: 2018,
     sourceType: "module",
@@ -12,9 +12,7 @@ module.exports = {
     tsconfigRootDir: "."
   },
   rules: {
-    // Place to specify ESLint rules. Can be used to overwrite rules specified from the extended configs
-    // e.g. "@typescript-eslint/explicit-function-return-type": "off",
-    "@typescript-eslint/camelCase": "always"
+    "prettier/prettier": ["error"]
   },
   settings: {
     "import/extensions": [".js", ".jsx", ".ts", ".tsx"],

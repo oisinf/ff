@@ -1,4 +1,7 @@
-import Header from "./Header/Header";
-import FFList from "./FFList/FFList";
+import HeaderUI from "./Header/Header";
 
-export {Header, FFList};
+import FFListUI from "./FFList/FFList";
+import FFListReducer from "./FFList/reducer";
+
+export {HeaderUI, FFListUI};
+export const reducers = {FFListReducer};

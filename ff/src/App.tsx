@@ -1,10 +1,10 @@
 import React from "react";
-import {Header, FFList} from "./Components";
+import {HeaderUI, FFListUI} from "./Components";
 const App: React.FC = () => {
   return (
     <>
-      <Header />
-      <FFList />
+      <HeaderUI />
+      <FFListUI />
     </>
   );
 };
