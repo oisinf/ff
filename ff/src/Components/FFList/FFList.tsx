@@ -18,17 +18,8 @@ const FFList = () => {
   useEffect(() => {
     getFantasyFootballData(dispatch);
   }, [dispatch]);
-  if (positionInfo) {
-    positionInfo.map(posInfo => {
-      console.log("Type", posInfo.plural_name);
-    });
-  }
 
-  console.log(
-    `\nLabels \n${JSON.stringify(labels)} \nPosition Info \n${JSON.stringify(
-      positionInfo
-    )}`
-  );
+  console.log("labels + positionInfo", labels, positionInfo);
   return <></>;
 };
 
