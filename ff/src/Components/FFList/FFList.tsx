@@ -3,6 +3,7 @@ import {getFantasyFootballData} from "./actions";
 import {useDispatch, useSelector, shallowEqual} from "react-redux";
 import {selectPlayerStatsLabels, selectPlayerPositionInfo} from "./selectors";
 import {StatsLabels, PlayerPositionInfo} from "./constants";
+
 const FFList = () => {
   const dispatch = useDispatch();
 
@@ -16,11 +17,19 @@ const FFList = () => {
   );
 
   useEffect(() => {
-    getFantasyFootballData(dispatch);
+    dispatch(getFantasyFootballData());
   }, [dispatch]);
 
   console.log("labels + positionInfo", labels, positionInfo);
-  return <></>;
+  return (
+    <>
+      {labels ? (
+        <div data-qa="Info Table"></div>
+      ) : (
+        <div data-qa>Error Loading Info</div>
+      )}
+    </>
+  );
 };
 
 export default FFList;

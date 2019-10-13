@@ -2,7 +2,7 @@ import {restRequest} from "../../reduxConfig/utilities";
 export const GET_FF_DATA = restRequest("FFList.GET_FF_DATA_ALL_DATA");
 
 // TODO: Will need to correctly define data types after investigating data types
-export type FFListState = FFData;
+export type FFListState = FFData & {requesting: boolean};
 
 export type FFData = {
   data: any;

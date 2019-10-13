@@ -1,17 +1,22 @@
 import axios from "axios";
 import {GET_FF_DATA} from "./constants";
-import {Dispatch} from "redux";
+import {AnyAction, ActionCreator, Dispatch} from "redux";
+import {ThunkAction} from "redux-thunk";
 
-export const getFantasyFootballData = (dispatch: Dispatch) => {
-  return axios({
-    method: "GET",
-    url: "api/bootstrap-static/"
-  })
-    .then(res => {
-      return dispatch({type: GET_FF_DATA.SUCCESS, payload: res.data});
+export const getFantasyFootballData: ActionCreator<
+  ThunkAction<Promise<void>, {}, {}, AnyAction>
+> = () => {
+  return async (dispatch: Dispatch) => {
+    dispatch({type: GET_FF_DATA.REQUEST, payload: false});
+    axios({
+      method: "GET",
+      url: "api/bootstrap-static/"
     })
-    .catch(err => {
-      console.log("error", err);
-      return dispatch({type: GET_FF_DATA.FAIL});
-    });
+      .then(res => {
+        dispatch({type: GET_FF_DATA.SUCCESS, payload: res.data});
+      })
+      .catch(err => {
+        dispatch({type: GET_FF_DATA.FAIL});
+      });
+  };
 };
