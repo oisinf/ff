@@ -1,11 +1,8 @@
 import axios from "axios";
 import {GET_FF_DATA} from "./constants";
-import {AnyAction, ActionCreator, Dispatch} from "redux";
-import {ThunkAction} from "redux-thunk";
+import {ActionCreator, Dispatch} from "redux";
 
-export const getFantasyFootballData: ActionCreator<
-  ThunkAction<Promise<void>, {}, {}, AnyAction>
-> = () => {
+export const getFantasyFootballData: ActionCreator<any> = () => {
   return async (dispatch: Dispatch) => {
     dispatch({type: GET_FF_DATA.REQUEST, payload: false});
     axios({

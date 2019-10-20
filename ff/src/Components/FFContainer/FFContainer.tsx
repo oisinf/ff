@@ -4,18 +4,16 @@ import {useDispatch, useSelector, shallowEqual} from "react-redux";
 import {selectPlayerStatsLabels, selectPlayerPositionInfo} from "./selectors";
 import {StatsLabels, PlayerPositionInfo} from "./constants";
 
-const FFList = () => {
+const FFContainer = () => {
   const dispatch = useDispatch();
 
-  const labels: Array<StatsLabels> = useSelector(
+  let labels: Array<StatsLabels> = useSelector(
     (state: any) => selectPlayerStatsLabels(state),
     shallowEqual
   );
-
-  const positionInfo: Array<PlayerPositionInfo> = useSelector((state: any) =>
+  let positionInfo: Array<PlayerPositionInfo> = useSelector((state: any) =>
     selectPlayerPositionInfo(state)
   );
-
   useEffect(() => {
     dispatch(getFantasyFootballData());
   }, [dispatch]);
@@ -24,12 +22,12 @@ const FFList = () => {
   return (
     <>
       {labels ? (
-        <div data-qa="Info Table"></div>
+        <div data-qa="ff-info"></div>
       ) : (
-        <div data-qa>Error Loading Info</div>
+        <div data-qa="error-message">Error Loading Info</div>
       )}
     </>
   );
 };
 
-export default FFList;
+export default FFContainer;
