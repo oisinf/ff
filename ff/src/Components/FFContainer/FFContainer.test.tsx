@@ -16,7 +16,7 @@ describe("FFList", () => {
   describe("FFList ui unit tests", () => {
     let wrapper: ReactWrapper, store: MockStore;
     it("Initial render", () => {
-      //TODO: Correct this as it actually doesn't affect test but need store for provider
+      //TODO: Get rid of enzyme and work with react-testing-library https://testing-library.com/docs/react-testing-library/intro
       store = mockStore({
         FFListReducer: {
           data: false,
