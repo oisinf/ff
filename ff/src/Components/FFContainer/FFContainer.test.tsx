@@ -1,31 +1,31 @@
 import React from "react";
-import {mount, ReactWrapper} from "enzyme";
 import FFContainer from "./FFContainer";
-import {MockStore} from "redux-mock-store";
-import {Provider} from "react-redux";
-import {mockStore, findDataQA} from "../../testUtils/utils";
+import {renderWithRedux} from "../../testUtils";
+import {GET_FF_DATA} from "./constants";
+import initialStore from "../../reduxConfig/store";
+describe("FFContainer", () => {
+  it("Should call getFFData on render, display data div if request is successful and error div if not or requesting", async () => {
+    let {getByTestId, store} = renderWithRedux(<FFContainer />, initialStore);
+    expect(getByTestId("error-message")).toBeDefined();
 
-const setup = (store: MockStore) => {
-  return mount(
-    <Provider store={store}>
-      <FFContainer />
-    </Provider>
-  );
-};
-describe("FFList", () => {
-  describe("FFList ui unit tests", () => {
-    let wrapper: ReactWrapper, store: MockStore;
-    it("Initial render", () => {
-      //TODO: Get rid of enzyme and work with react-testing-library https://testing-library.com/docs/react-testing-library/intro
-      store = mockStore({
-        FFListReducer: {
-          data: false,
-          requesting: true
+    store.dispatch({
+      type: GET_FF_DATA.SUCCESS,
+      payload: {
+        element_stats: {
+          stub1: 1
+        },
+        element_types: {
+          stub1: 1
         }
-      });
-      wrapper = setup(store);
-      const errorMessage = findDataQA(wrapper, "error-message");
-      expect(errorMessage.length).toBe(1);
+      }
     });
+    expect(getByTestId("ff-info")).toBeDefined();
+
+    store.dispatch({
+      type: GET_FF_DATA.FAIL,
+      payload: false
+    });
+
+    expect(getByTestId("error-message")).toBeDefined();
   });
 });

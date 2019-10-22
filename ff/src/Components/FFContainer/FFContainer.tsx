@@ -22,9 +22,9 @@ const FFContainer = () => {
   return (
     <>
       {labels ? (
-        <div data-qa="ff-info"></div>
+        <div data-testid="ff-info"></div>
       ) : (
-        <div data-qa="error-message">Error Loading Info</div>
+        <div data-testid="error-message">Error Loading Info</div>
       )}
     </>
   );
