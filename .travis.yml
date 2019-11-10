@@ -19,7 +19,7 @@ deploy:
   script: 
     #push image to docker //not needed though
     #docker push oisinf/fantasy_football_ui
-    docker push registry.heroku.com/$FANTASY_FOOTBALL_APP_NAME/web
-    heroku container:release web --app $FANTASY_FOOTBALL_APP_NAME
+    docker push registry.heroku.com/$FANTASY_FOOTBALL_APP_NAME/web;
+    heroku container:release web --app $FANTASY_FOOTBALL_APP_NAME;
   api_key:
     secure: $HEROKU_API_KEY
