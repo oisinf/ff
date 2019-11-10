@@ -6,4 +6,4 @@ before_install:
   - docker build -t oisinf/fantasty_football_ui -f ff/Dockerfile.dev ff
 
 script:
-  - docker run -e CI=true oisinf/fantasty_football_ui npm run install
+  - docker run -e CI=true oisinf/fantasty_football_ui npm run test
