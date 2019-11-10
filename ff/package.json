@@ -67,6 +67,5 @@
     "prettier": "^1.18.2",
     "redux-devtools-extension": "^2.13.8",
     "redux-mock-store": "^1.5.3"
-  },
-  "proxy": "https://fantasy.premierleague.com/"
+  }
 }
