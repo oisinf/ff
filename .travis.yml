@@ -7,3 +7,9 @@ before_install:
 
 script:
   - docker run -e CI=true oisinf/fantasy_football_ui npm run test
+
+deploy: 
+  provider: heroku
+  script: docker push registry.heroku.com/fantasy-football-u/web
+  api_key:
+    secure: $HEROKU_API_KEY
