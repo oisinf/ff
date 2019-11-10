@@ -1,11 +1,12 @@
 import {createSelector} from "reselect";
+import {FFDataNodes, StatsLabels} from "./constants";
 export const selectFFDataComplete = ({FFListReducer}: any) => {
   return FFListReducer.data;
 };
 // TODO: Create types for data...
 export const selectPlayerStatsLabels = createSelector(
   [selectFFDataComplete],
-  data => {
+  (data: FFDataNodes) => {
     if (data.element_stats) {
       return data.element_stats;
     } else {
@@ -16,19 +17,23 @@ export const selectPlayerStatsLabels = createSelector(
 
 export const selectPlayerPositionInfo = createSelector(
   [selectFFDataComplete],
-  data => {
+  (data: FFDataNodes) => {
     if (data.element_types) {
       return data.element_types;
     } else {
-      return data;
+      return false;
     }
   }
 );
 
-export const selectElementElements = createSelector(
+export const SelectPlayers = createSelector(
   [selectFFDataComplete],
-  data => {
-    return data;
+  (data: FFDataNodes) => {
+    if (data.elements) {
+      return data.elements;
+    } else {
+      return false;
+    }
   }
 );
 export const selectGameSettings = createSelector(

@@ -1,24 +1,29 @@
 import React, {useEffect} from "react";
 import {getFantasyFootballData} from "./actions";
 import {useDispatch, useSelector, shallowEqual} from "react-redux";
-import {selectPlayerStatsLabels, selectPlayerPositionInfo} from "./selectors";
-import {StatsLabels, PlayerPositionInfo} from "./constants";
+import {
+  selectPlayerStatsLabels,
+  selectPlayerPositionInfo,
+  SelectPlayers
+} from "./selectors";
+import {StatsLabels, PositionInfo, PlayerInfo} from "./constants";
 
 const FFContainer = () => {
   const dispatch = useDispatch();
 
-  let labels: Array<StatsLabels> = useSelector(
+  let labels: Array<StatsLabels> | false = useSelector(
     (state: any) => selectPlayerStatsLabels(state),
     shallowEqual
   );
-  let positionInfo: Array<PlayerPositionInfo> = useSelector((state: any) =>
+  let positionInfo: Array<PositionInfo> | false = useSelector((state: any) =>
     selectPlayerPositionInfo(state)
+  );
+  let players: Array<PlayerInfo> | false = useSelector((state: any) =>
+    SelectPlayers(state)
   );
   useEffect(() => {
     dispatch(getFantasyFootballData());
   }, [dispatch]);
-
-  console.log("labels + positionInfo", labels, positionInfo);
   return (
     <>
       {labels ? (
