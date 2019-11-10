@@ -7,10 +7,19 @@ before_install:
 
 script:
   - docker run -e CI=true oisinf/fantasy_football_ui npm run test
+  #login in to docker
   - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
+  #install heroku cli
+  - wget -qO- https://toolbelt.heroku.com/install.sh | sh
+  - echo "$ HEROKU_PASSWORD" | docker login -u "$ HEROKU_USERNAME" --password-stdin registry.heroku.com
+  - docker tag oisinf/fantasy_football_ui registry.heroku.com/$FANTASY_FOOTBALL_APP_NAME/web
 
 deploy: 
   provider: script
   script: 
-    docker push oisinf/fantasy_football_ui
-  
+    #push image to docker //not needed though
+    #docker push oisinf/fantasy_football_ui
+    docker push registry.heroku.com/$FANTASY_FOOTBALL_APP_NAME/web
+    heroku container:release web --app $FANTASY_FOOTBALL_APP_NAME
+  api_key:
+    secure: $HEROKU_API_KEY
