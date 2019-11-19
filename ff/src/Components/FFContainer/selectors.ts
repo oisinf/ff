@@ -1,12 +1,21 @@
 import {createSelector} from "reselect";
-import {FFDataNodes, StatsLabels} from "./constants";
+import {
+  FFDataNodes,
+  StatsLabels,
+  PlayerInfo,
+  PositionInfo,
+  GameSettings,
+  Phases,
+  Team
+} from "./constants";
 export const selectFFDataComplete = ({FFListReducer}: any) => {
+  console.log("data", FFListReducer.data);
   return FFListReducer.data;
 };
 // TODO: Create types for data...
 export const selectPlayerStatsLabels = createSelector(
   [selectFFDataComplete],
-  (data: FFDataNodes) => {
+  (data: FFDataNodes): Array<StatsLabels> | false => {
     if (data.element_stats) {
       return data.element_stats;
     } else {
@@ -17,7 +26,7 @@ export const selectPlayerStatsLabels = createSelector(
 
 export const selectPlayerPositionInfo = createSelector(
   [selectFFDataComplete],
-  (data: FFDataNodes) => {
+  (data: FFDataNodes): Array<PositionInfo> | false => {
     if (data.element_types) {
       return data.element_types;
     } else {
@@ -28,7 +37,7 @@ export const selectPlayerPositionInfo = createSelector(
 
 export const SelectPlayers = createSelector(
   [selectFFDataComplete],
-  (data: FFDataNodes) => {
+  (data: FFDataNodes): Array<PlayerInfo> | false => {
     if (data.elements) {
       return data.elements;
     } else {
@@ -38,20 +47,32 @@ export const SelectPlayers = createSelector(
 );
 export const selectGameSettings = createSelector(
   [selectFFDataComplete],
-  data => {
-    return data;
+  (data: FFDataNodes): GameSettings | false => {
+    if (data.game_settings) {
+      return data.game_settings;
+    } else {
+      return false;
+    }
   }
 );
 
 export const selectPhases = createSelector(
   [selectFFDataComplete],
-  data => {
-    return data;
+  (data: FFDataNodes): Array<Phases> | false => {
+    if (data.phases) {
+      return data.phases;
+    } else {
+      return false;
+    }
   }
 );
-export const selectElementTeams = createSelector(
+export const selectTeams = createSelector(
   [selectFFDataComplete],
-  data => {
-    return data;
+  (data: FFDataNodes): Array<Team> | false => {
+    if (data.teams) {
+      return data.teams;
+    } else {
+      return false;
+    }
   }
 );

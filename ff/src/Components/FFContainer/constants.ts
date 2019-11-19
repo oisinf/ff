@@ -12,9 +12,9 @@ export type FFDataNodes = {
   element_types: Array<PositionInfo>;
   elements: Array<PlayerInfo>;
   events: Array<JSON>;
-  game_settings: JSON;
-  phases: Array<JSON>;
-  teams: Array<JSON>;
+  game_settings: GameSettings;
+  phases: Array<Phases>;
+  teams: Array<Team>;
   total_players: number;
 };
 export interface GetFFDataAction {
@@ -91,4 +91,56 @@ export type PlayerInfo = {
   value_season: string;
   web_name: string;
   yellow_cards: number;
+};
+export type GameSettings = {
+  cup_start_event_id: number;
+  league_join_private_max: number;
+  league_join_public_max: number;
+  league_max_ko_rounds_private_h2h: number;
+  league_max_size_private_h2h: number;
+  league_max_size_public_classic: number;
+  league_max_size_public_h2h: number;
+  league_points_h2h_draw: number;
+  league_points_h2h_lose: number;
+  league_points_h2h_win: number;
+  league_prefix_public: string;
+  squad_squadplay: number;
+  squad_squadsize: number;
+  squad_team_limit: number;
+  squad_total_spend: number;
+  stats_form_days: number;
+  sys_vice_captain_enabled: boolean;
+  timezone: string;
+  transfers_sell_on_fee: number;
+  ui_currency_multiplier: number;
+  ui_special_shirt_exclusions: Array<any>;
+  ui_use_special_shirts: boolean;
+};
+
+export type Phases = {
+  id: number;
+  name: string;
+  start_event: number;
+  stop_event: number;
+};
+export type Team = {
+  code: number;
+  draw: number;
+  form: null;
+  id: number;
+  loss: number;
+  name: string;
+  played: number;
+  points: number;
+  position: number;
+  short_name: string;
+  strength: number;
+  strength_attack_away: number;
+  strength_attack_home: number;
+  strength_defence_away: number;
+  strength_defence_home: number;
+  strength_overall_away: number;
+  strength_overall_home: number;
+  team_division: number;
+  unavailable: boolean;
 };
