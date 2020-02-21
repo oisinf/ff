@@ -1,3 +1,4 @@
+#TODO update docker file get docker compose working again
 version: "3"
 services:
   ff:

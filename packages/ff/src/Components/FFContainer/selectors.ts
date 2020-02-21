@@ -12,7 +12,6 @@ export const selectFFDataComplete = ({FFListReducer}: any) => {
   console.log("data", FFListReducer.data);
   return FFListReducer.data;
 };
-// TODO: Create types for data...
 export const selectPlayerStatsLabels = createSelector(
   [selectFFDataComplete],
   (data: FFDataNodes): Array<StatsLabels> | false => {

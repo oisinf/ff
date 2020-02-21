@@ -1,3 +1,4 @@
+#TODO Update pipeline to deploy frontend and proxy
 sudo: required
 services:
   - docker
@@ -14,9 +15,9 @@ script:
   - echo "$HEROKU_PASSWORD" | docker login -u "$HEROKU_USERNAME" --password-stdin registry.heroku.com
   - docker tag oisinf/fantasy_football_ui registry.heroku.com/$FANTASY_FOOTBALL_APP_NAME/web
 
-deploy: 
+deploy:
   provider: script
-  script: 
+  script:
     #push image to docker //not needed though
     #docker push oisinf/fantasy_football_ui
     docker push registry.heroku.com/$FANTASY_FOOTBALL_APP_NAME/web;
