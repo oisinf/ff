@@ -1,11 +1,10 @@
 {
-  "name": "expressproxy",
+  "name": "ffproxy",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node index.ts"
+    "start_proxy": "node src/index.js"
   },
   "author": "",
   "license": "ISC",
@@ -13,11 +12,6 @@
     "express": "^4.17.1",
     "http": "0.0.0",
     "request": "^2.88.0"
-  },
-  "devDependencies": {
-    "@types/express": "^4.17.2",
-    "@types/request": "^2.48.4",
-    "ts-node": "^8.6.2"
   },
   "type": "module"
 }

@@ -1,9 +1,9 @@
 import express from "express";
 import request from "request";
-import http, {Server} from "http";
+import http from "http";
 const app = express();
 
-const httpServer: Server = http.createServer(app);
+const httpServer = http.createServer(app);
 
 app.use((req, res, next) => {
   res.header("Access-Control-Allow-Origin", "*");

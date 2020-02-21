@@ -5,7 +5,14 @@
   "eslint.enable": true,
   "eslint.quiet": false,
   "eslint.validate": [
+    "html",
+    "javascript",
+    "typescript",
+    "javascriptreact",
+    "typescriptreact"
+  ],
   "editor.codeActionsOnSave": {
     "source.fixAll.eslint": true
-  }
+  },
+  "typescript.tsdk": "node_modules/typescript/lib"
 }
