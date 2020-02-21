@@ -18,7 +18,6 @@ import {
 import styled from "styled-components";
 
 const FFInfoContainer = styled.div`
-  height:100%
   margin:30px
   background-color: rgb(55,0,66);
   border-radius:10px;

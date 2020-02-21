@@ -6,7 +6,7 @@ export const getFantasyFootballData: ActionCreator<any> = () => {
   return async (dispatch: Dispatch) => {
     dispatch({type: GET_FF_DATA.REQUEST, payload: false});
     axios
-      .get("https://fantasy.premierleague.com/api/bootstrap-static/")
+      .get("http://localhost:3001/football-stuff")
       .then(res => {
         dispatch({type: GET_FF_DATA.SUCCESS, payload: res.data});
       })

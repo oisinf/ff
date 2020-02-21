@@ -1,5 +1,5 @@
 import React from "react";
-import {HeaderUI, FFListUI} from "./Components";
+import { HeaderUI, FFListUI } from "./Components";
 import styled from "styled-components";
 
 const ContainerDiv = styled.div`
@@ -11,7 +11,7 @@ const ContainerDiv = styled.div`
 const App: React.FC = () => {
   return (
     <ContainerDiv>
-      <HeaderUI />
+      {/* <HeaderUI /> */}
       <FFListUI />
     </ContainerDiv>
   );

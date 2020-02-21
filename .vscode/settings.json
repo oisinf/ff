@@ -2,26 +2,10 @@
   "files.autoSave": "off",
   "editor.formatOnSave": true,
   "eslint.run": "onType",
-  "eslint.autoFixOnSave": true,
   "eslint.enable": true,
   "eslint.quiet": false,
   "eslint.validate": [
-    "html",
-    {
-      "language": "javascript",
-      "autoFix": true
-    },
-    {
-      "language": "javascriptreact",
-      "autoFix": true
-    },
-    {
-      "language": "typescript",
-      "autoFix": true
-    },
-    {
-      "language": "typescriptreact",
-      "autoFix": true
-    }
-  ]
+  "editor.codeActionsOnSave": {
+    "source.fixAll.eslint": true
+  }
 }
