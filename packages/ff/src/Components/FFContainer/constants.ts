@@ -1,7 +1,8 @@
-import {restRequest} from "../../reduxConfig/utilities";
+import { restRequest } from "../../reduxConfig/utilities";
+
 export const GET_FF_DATA = restRequest("FFList.GET_FF_DATA_ALL_DATA");
 
-export type FFListState = {data: FFData | boolean; requesting: boolean};
+export type FFListState = { data: FFData | boolean; requesting: boolean };
 
 export interface FFData {
   data: FFDataNodes;

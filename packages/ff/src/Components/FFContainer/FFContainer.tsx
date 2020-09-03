@@ -1,21 +1,22 @@
-import React, {useEffect, memo} from "react";
-import {getFantasyFootballData} from "./actions";
-import {useDispatch, useSelector, shallowEqual} from "react-redux";
+import React, { useEffect, memo } from "react";
+import { useDispatch, useSelector, shallowEqual } from "react-redux";
+import styled from "styled-components";
+import { getFantasyFootballData } from "./actions";
 import {
   selectPlayerStatsLabels,
   selectPlayerPositionInfo,
   SelectPlayers,
   selectGameSettings,
-  selectPhases
+  selectPhases,
+  selectTeams
 } from "./selectors";
 import {
   StatsLabels,
   PositionInfo,
   PlayerInfo,
   GameSettings,
-  Phases
+  Phases, Team
 } from "./constants";
-import styled from "styled-components";
 
 const FFInfoContainer = styled.div`
   margin:30px
@@ -28,29 +29,32 @@ const FFInfoContainer = styled.div`
 const FFContainer: React.FC = () => {
   const dispatch = useDispatch();
 
-  let labels: Array<StatsLabels> | false = useSelector(
+  const labels: Array<StatsLabels> | false = useSelector(
     (state: any) => selectPlayerStatsLabels(state),
     shallowEqual
   );
-  // let positionInfo: Array<PositionInfo> | false = useSelector((state: any) =>
-  //   selectPlayerPositionInfo(state)
-  // );
-  // let players: Array<PlayerInfo> | false = useSelector((state: any) =>
-  //   SelectPlayers(state)
-  // );
-  // let settings: GameSettings | false = useSelector((state: any) =>
-  //   selectGameSettings(state)
-  // );
-  // let phases: Array<Phases> | false = useSelector((state: any) =>
-  //   selectPhases(state)
-  // );
+  let positionInfo: Array<PositionInfo> | false = useSelector((state: any) =>
+    selectPlayerPositionInfo(state)
+  );
+  let players: Array<PlayerInfo> | false = useSelector((state: any) =>
+    SelectPlayers(state)
+  );
+  let settings: GameSettings | false = useSelector((state: any) =>
+    selectGameSettings(state)
+  );
+  let phases: Array<Phases> | false = useSelector((state: any) =>
+    selectPhases(state)
+  );
+  let team: Array<Team> | false = useSelector((state: any) =>
+    selectTeams(state)
+  );
   useEffect(() => {
     dispatch(getFantasyFootballData());
   }, [dispatch]);
   return (
     <>
       {labels ? (
-        <FFInfoContainer data-testid="ff-info"></FFInfoContainer>
+        <FFInfoContainer data-testid="ff-info" />
       ) : (
         <div data-testid="error-message">Error Loading Info</div>
       )}

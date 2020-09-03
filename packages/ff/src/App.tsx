@@ -1,6 +1,6 @@
 import React from "react";
-import { HeaderUI, FFListUI } from "./Components";
 import styled from "styled-components";
+import { HeaderUI, FFListUI } from "./Components";
 
 const ContainerDiv = styled.div`
   width: 100%;
@@ -11,7 +11,7 @@ const ContainerDiv = styled.div`
 const App: React.FC = () => {
   return (
     <ContainerDiv>
-      {/* <HeaderUI /> */}
+      <HeaderUI />
       <FFListUI />
     </ContainerDiv>
   );
