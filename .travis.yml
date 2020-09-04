@@ -4,7 +4,7 @@ services:
   - docker
 
 before_install:
-  - docker build -t oisinf/fantasy_football_ui -f ff/Dockerfile.dev ff
+  - docker build -t oisinf/fantasy_football_ui -f packages/ff/Dockerfile.dev ff
 
 script:
   - docker run -e CI=true oisinf/fantasy_football_ui npm run test
