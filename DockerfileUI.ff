@@ -5,8 +5,8 @@ COPY packages/ff/package.json /packages/ff/package.json
 COPY lerna.json .
 RUN npm install
 COPY . .
-CMD ["npm", "run", "bootstrap"]
-CMD ["npm", "run", "build_ff_ui"]
+RUN npm run bootstrap
+CMD npm run build_ff_ui
 
 FROM nginx:alpine
 EXPOSE 80
