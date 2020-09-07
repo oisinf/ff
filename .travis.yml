@@ -5,8 +5,10 @@ services:
 before_install:
   - docker build -t oisinf/fantasy_football_ui -f DockerfileUI.ff .
 
-script:CMD
- #login in to docker
+script:
+# TODO: Get test working
+#  - docker run -e CI=true oisinf/fantasy_football_ui npm run test
+  #login in to docker
   - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
   #install heroku cli
   - wget -qO- https://toolbelt.heroku.com/install.sh | sh
