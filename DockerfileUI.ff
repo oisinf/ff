@@ -4,13 +4,11 @@ COPY package.json .
 COPY packages/ff/package.json /packages/ff/package.json
 COPY lerna.json .
 RUN npm install
-COPY . .
 RUN npm run bootstrap
+COPY . .
 RUN npm run build_ff_ui
 
 FROM nginx:alpine
 COPY packages/ff/nginx.config /etc/nginx/nginx.template
 RUN rm -rf /usr/share/nginx/html/*
 COPY --from=builder /app/packages/ff/build /usr/share/nginx/html
-EXPOSE 3000 80
-ENTRYPOINT ["nginx", "-g", "daemon off;"]
