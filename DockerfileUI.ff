@@ -12,3 +12,4 @@ FROM nginx:alpine
 COPY packages/ff/nginx.config /etc/nginx/nginx.template
 RUN rm -rf /usr/share/nginx/html/*
 COPY --from=builder /app/packages/ff/build /usr/share/nginx/html
+EXPOSE 3000 80
