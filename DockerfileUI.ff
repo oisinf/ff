@@ -4,8 +4,8 @@ COPY package.json .
 COPY packages/ff/package.json /packages/ff/package.json
 COPY lerna.json .
 RUN npm install
-RUN npm run bootstrap
 COPY . .
+RUN npm run bootstrap
 RUN npm run build_ff_ui
 
 FROM nginx:alpine
