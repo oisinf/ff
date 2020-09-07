@@ -9,7 +9,10 @@ RUN npm run bootstrap
 RUN npm run build_ff_ui
 
 FROM nginx:alpine
-COPY packages/ff/nginx.config /etc/nginx/nginx.template
+RUN apk update && apk add bash
+COPY packages/ff/nginx.conf /etc/nginx/nginx.conf
+COPY packages/ff/default.conf.template /etc/nginx/conf.d/default.conf.template
 RUN rm -rf /usr/share/nginx/html/*
 COPY --from=builder /app/packages/ff/build /usr/share/nginx/html
-EXPOSE 3000 80
+#Heroku stuff to get it to run as don't have root privilages in heroku
+CMD /bin/bash -c "envsubst '\$PORT' < /etc/nginx/conf.d/default.conf.template > /etc/nginx/conf.d/default.conf" && nginx -g 'daemon off;'
