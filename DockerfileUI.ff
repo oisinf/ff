@@ -6,7 +6,7 @@ COPY lerna.json .
 RUN npm install
 COPY . .
 RUN npm run bootstrap
-CMD npm run build_ff_ui
+RUN npm run build_ff_ui
 
 FROM nginx:alpine
 EXPOSE 80
