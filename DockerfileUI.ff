@@ -9,5 +9,8 @@ RUN npm run bootstrap
 RUN npm run build_ff_ui
 
 FROM nginx:alpine
-EXPOSE 80
+COPY packages/ff/nginx.config /etc/nginx/nginx.template
+RUN rm -rf /usr/share/nginx/html/*
 COPY --from=builder /app/packages/ff/build /usr/share/nginx/html
+EXPOSE 3000 80
+ENTRYPOINT ["nginx", "-g", "daemon off;"]
