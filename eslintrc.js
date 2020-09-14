@@ -20,16 +20,7 @@ module.exports = {
   rules: {
     "prettier/prettier": ["error"],
     "react/jsx-filename-extension": [1, { extensions: [".tsx", ".ts"] }],
-    "import/extensions": [
-      "error",
-      "ignorePackages",
-      {
-        js: "never",
-        jsx: "never",
-        ts: "never",
-        tsx: "never"
-      }
-    ]
+    "@typescript-eslint/explicit-function-return-type": "off"
   },
   settings: {
     "import/extensions": [".js", ".jsx", ".ts", ".tsx"],

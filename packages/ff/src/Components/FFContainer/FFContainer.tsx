@@ -15,7 +15,8 @@ import {
   PositionInfo,
   PlayerInfo,
   GameSettings,
-  Phases, Team
+  Phases,
+  Team
 } from "./constants";
 
 const FFInfoContainer = styled.div`
@@ -33,19 +34,19 @@ const FFContainer: React.FC = () => {
     (state: any) => selectPlayerStatsLabels(state),
     shallowEqual
   );
-  let positionInfo: Array<PositionInfo> | false = useSelector((state: any) =>
+  const positionInfo: Array<PositionInfo> | false = useSelector((state: any) =>
     selectPlayerPositionInfo(state)
   );
-  let players: Array<PlayerInfo> | false = useSelector((state: any) =>
+  const players: Array<PlayerInfo> | false = useSelector((state: any) =>
     SelectPlayers(state)
   );
-  let settings: GameSettings | false = useSelector((state: any) =>
+  const settings: GameSettings | false = useSelector((state: any) =>
     selectGameSettings(state)
   );
-  let phases: Array<Phases> | false = useSelector((state: any) =>
+  const phases: Array<Phases> | false = useSelector((state: any) =>
     selectPhases(state)
   );
-  let team: Array<Team> | false = useSelector((state: any) =>
+  const team: Array<Team> | false = useSelector((state: any) =>
     selectTeams(state)
   );
   useEffect(() => {

@@ -1,17 +1,17 @@
 import axios from "axios";
-import {GET_FF_DATA} from "./constants";
-import {ActionCreator, Dispatch} from "redux";
+import { GET_FF_DATA } from "./constants";
+import { ActionCreator, Dispatch } from "redux";
 
 export const getFantasyFootballData: ActionCreator<any> = () => {
   return async (dispatch: Dispatch) => {
-    dispatch({type: GET_FF_DATA.REQUEST, payload: false});
+    dispatch({ type: GET_FF_DATA.REQUEST, payload: false });
     axios
-      .get("http://localhost:3001/football-stuff")
+      .get("football-stuff")
       .then(res => {
-        dispatch({type: GET_FF_DATA.SUCCESS, payload: res.data});
+        dispatch({ type: GET_FF_DATA.SUCCESS, payload: res.data });
       })
       .catch(err => {
-        dispatch({type: GET_FF_DATA.FAIL});
+        dispatch({ type: GET_FF_DATA.FAIL });
       });
   };
 };

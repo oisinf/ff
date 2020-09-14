@@ -4,7 +4,8 @@
   "description": "",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start_proxy": "node src/index.js"
+    "start_proxy": "node src/index.js",
+    "start_dev_proxy": "nodemon src/index.js"
   },
   "author": "",
   "license": "ISC",
@@ -13,5 +14,8 @@
     "http": "0.0.0",
     "request": "^2.88.0"
   },
-  "type": "module"
+  "type": "module",
+  "devDependencies": {
+    "nodemon": "^2.0.4"
+  }
 }

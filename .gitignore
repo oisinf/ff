@@ -2,6 +2,7 @@
 
 # dependencies
 node_modules/
+packages/ff/build
 /.pnp
 .pnp.js
 
