@@ -1,0 +1,21 @@
+version: "3.7"
+
+services:
+
+  fantasy_football:
+    image: oisinf/fantasy_football:prod
+    build:
+      context: .
+      target: prod
+    container_name: fantasy_football
+    restart: always
+    volumes:
+      - .:/app
+    ports:
+      - "80:5000"
+    networks:
+      - fantasy_football_network
+
+networks:
+  fantasy_football_network:
+    name: fantasy_football_network

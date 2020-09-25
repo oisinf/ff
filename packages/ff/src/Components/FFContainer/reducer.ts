@@ -1,4 +1,4 @@
-import {FFListState, FFListActionTypes, GET_FF_DATA} from "./constants";
+import { FFListState, FFListActionTypes, GET_FF_DATA } from "./constants";
 
 export const INITIAL_STATE: FFListState = {
   data: false,
@@ -8,12 +8,12 @@ export const INITIAL_STATE: FFListState = {
 export default (state = INITIAL_STATE, action: FFListActionTypes) => {
   switch (action.type) {
     case GET_FF_DATA.REQUEST:
-      return {...state, requesting: true, data: false};
+      return { ...state, requesting: true, data: false };
     case GET_FF_DATA.SUCCESS:
-      return {...state, requesting: false, data: action.payload};
+      return { ...state, requesting: false, data: action.payload };
     case GET_FF_DATA.FAIL:
-      return {...state, requesting: false, data: false};
+      return { ...state, requesting: false, data: false };
     default:
-      return {...state};
+      return { ...state };
   }
 };

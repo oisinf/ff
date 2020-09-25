@@ -1,26 +1,25 @@
 import express from "express";
-import request from "request";
 import http from "http";
-
+import path from "path";
+import routes from "./routes.js";
 const app = express();
 
 const httpServer = http.createServer(app);
+routes(app);
 
-app.use((req, res, next) => {
-  res.header("Access-Control-Allow-Origin", "*");
-  next();
-});
+// eslint-disable-next-line no-undef
+// if (process.env.NODE_ENV === "production") {
+app.use(express.static("../ff/build"));
 
-app.get("/football-stuff", (req, res) => {
-  request(
-    { url: "https://fantasy.premierleague.com/api/bootstrap-static/" },
-    (error, response, body) => {
-      if (error || response.statusCode !== 200) {
-        return res.status(500).json({ type: "error", message: error.message });
-      }
-      return res.json(JSON.parse(body));
-    }
+app.get("*", (req, res) => {
+  res.sendFile(
+    // eslint-disable-next-line no-undef
+    path.resolve(__dirname, "packages", "ff", "build", "index.html")
   );
 });
-const PORT = process.env.PORT || 3001;
+// }
+
+// eslint-disable-next-line no-undef
+const PORT = process.env.PORT || 5000;
+// eslint-disable-next-line no-undef
 httpServer.listen(PORT, () => console.log(`listening on ${PORT}`));
