@@ -17,6 +17,10 @@ module.exports = {
     project: "./tsconfig.json",
     tsconfigRootDir: "."
   },
+  env: {
+    browser: true,
+    node: true
+  },
   rules: {
     "prettier/prettier": ["error"],
     "react/jsx-filename-extension": [1, { extensions: [".tsx", ".ts"] }],

@@ -1,23 +1,7 @@
-import React, { useEffect, memo } from "react";
-import { useDispatch, useSelector, shallowEqual } from "react-redux";
+import React, { memo } from "react";
 import styled from "styled-components";
-import { getFantasyFootballData } from "./actions";
-import {
-  selectPlayerStatsLabels,
-  selectPlayerPositionInfo,
-  SelectPlayers,
-  selectGameSettings,
-  selectPhases,
-  selectTeams
-} from "./selectors";
-import {
-  StatsLabels,
-  PositionInfo,
-  PlayerInfo,
-  GameSettings,
-  Phases,
-  Team
-} from "./constants";
+import { QueryResult, useQuery } from "react-query";
+import axios from "axios";
 
 const FFInfoContainer = styled.div`
   margin:30px
@@ -28,36 +12,23 @@ const FFInfoContainer = styled.div`
 `;
 
 const FFContainer: React.FC = () => {
-  const dispatch = useDispatch();
+  const { isLoading, isError, data }: QueryResult<unknown> = useQuery(
+    "ff_request",
+    async () => {
+      return await axios.get("football-stuff");
+    }
+  );
 
-  const labels: Array<StatsLabels> | false = useSelector(
-    (state: any) => selectPlayerStatsLabels(state),
-    shallowEqual
-  );
-  const positionInfo: Array<PositionInfo> | false = useSelector((state: any) =>
-    selectPlayerPositionInfo(state)
-  );
-  const players: Array<PlayerInfo> | false = useSelector((state: any) =>
-    SelectPlayers(state)
-  );
-  const settings: GameSettings | false = useSelector((state: any) =>
-    selectGameSettings(state)
-  );
-  const phases: Array<Phases> | false = useSelector((state: any) =>
-    selectPhases(state)
-  );
-  const team: Array<Team> | false = useSelector((state: any) =>
-    selectTeams(state)
-  );
-  useEffect(() => {
-    dispatch(getFantasyFootballData());
-  }, [dispatch]);
+  // @ts-ignore
+  console.log("here is the data", data?.data as string);
   return (
     <>
-      {labels ? (
-        <FFInfoContainer data-testid="ff-info" />
+      {isLoading ? (
+        <div>Loading data...</div>
+      ) : isError ? (
+        <div>Error loading data...</div>
       ) : (
-        <div data-testid="error-message">Error Loading Info</div>
+        <FFInfoContainer data-testid="ff-info"></FFInfoContainer>
       )}
     </>
   );
