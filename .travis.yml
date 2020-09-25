@@ -3,7 +3,7 @@ services:
   - docker
 
 before_install:
-  - docker build -t oisinf/fantasy_football_ui -f DockerfileUI.ff .
+  - docker-compose build
 
 script:
 # TODO: Get test working
