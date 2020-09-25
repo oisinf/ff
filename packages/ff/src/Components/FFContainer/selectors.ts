@@ -10,7 +10,6 @@ import {
 } from "./constants";
 
 export const selectFFDataComplete = ({ FFListReducer }: any) => {
-  // eslint-disable-next-line no-console
   console.log("data", FFListReducer.data);
   return FFListReducer.data;
 };

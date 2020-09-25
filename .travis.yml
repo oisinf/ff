@@ -1,4 +1,3 @@
-#TODO Update pipeline to deploy frontend and proxy
 services:
   - docker
 
