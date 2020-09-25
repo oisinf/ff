@@ -13,7 +13,7 @@ script:
   #install heroku cli
   - wget -qO- https://toolbelt.heroku.com/install.sh | sh
   - echo "$HEROKU_PASSWORD" | docker login -u "$HEROKU_USERNAME" --password-stdin registry.heroku.com
-  - docker tag oisinf/fantasy_football_ui registry.heroku.com/$FANTASY_FOOTBALL_APP_NAME/web
+  - docker tag oisinf/fantasy_football:prod registry.heroku.com/$FANTASY_FOOTBALL_APP_NAME/web
 
 deploy:
   provider: script
