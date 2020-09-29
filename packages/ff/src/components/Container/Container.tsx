@@ -3,6 +3,7 @@ import styled from "styled-components";
 import { QueryResult, useQuery } from "react-query";
 import axios, { AxiosResponse } from "axios";
 import { List } from "../";
+import { PlayerInfo } from "../List/List";
 
 const StyledContainer = styled.div`
   margin:30px
@@ -12,7 +13,7 @@ const StyledContainer = styled.div`
 `;
 
 export type FootballInfo = {
-  elements: Array<unknown>; //Players
+  elements: Array<PlayerInfo>;
 };
 
 const Container: React.FC = () => {

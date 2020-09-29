@@ -24,7 +24,8 @@ module.exports = {
   rules: {
     "prettier/prettier": ["error"],
     "react/jsx-filename-extension": [1, { extensions: [".tsx", ".ts"] }],
-    "@typescript-eslint/explicit-function-return-type": "off"
+    "@typescript-eslint/explicit-function-return-type": "off",
+    "react/prop-types": "off"
   },
   settings: {
     "import/extensions": [".js", ".jsx", ".ts", ".tsx"],
