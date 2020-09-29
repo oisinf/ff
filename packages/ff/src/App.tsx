@@ -1,6 +1,6 @@
 import React from "react";
 import styled from "styled-components";
-import { HeaderUI, FFListUI } from "./Components";
+import { Header, Container } from "./components";
 import { ReactQueryDevtools } from "react-query-devtools";
 import { QueryCache, ReactQueryCacheProvider } from "react-query";
 
@@ -16,8 +16,8 @@ const App: React.FC = () => {
   return (
     <ReactQueryCacheProvider queryCache={queryCache}>
       <ContainerDiv>
-        <HeaderUI />
-        <FFListUI />
+        <Header />
+        <Container />
       </ContainerDiv>
       <ReactQueryDevtools initialIsOpen />
     </ReactQueryCacheProvider>

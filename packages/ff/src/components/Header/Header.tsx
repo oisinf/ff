@@ -14,6 +14,9 @@ const StyledHeader = styled(Typography)`
   display: flex;
   flex-direction: column;
 `;
-export default () => {
+
+const Header: React.FC = () => {
   return <StyledHeader variant="h3">Fantasy Football</StyledHeader>;
 };
+
+export default Header;
