@@ -2,8 +2,8 @@ import React, { memo } from "react";
 import styled from "styled-components";
 import { QueryResult, useQuery } from "react-query";
 import axios, { AxiosResponse } from "axios";
-import { List } from "../";
-import { PlayerInfo } from "../List/List";
+import { PlayerGridView } from "../index";
+import { PlayerInfo } from "../PlayerGridView/PlayerGridView";
 
 const StyledContainer = styled.div`
   margin:30px
@@ -37,7 +37,7 @@ const Container: React.FC = () => {
         ))}
       {data && (
         <StyledContainer data-testid="ff-info">
-          <List players={data.elements} />
+          <PlayerGridView players={data.elements} />
         </StyledContainer>
       )}
     </>

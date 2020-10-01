@@ -25,7 +25,8 @@ module.exports = {
     "prettier/prettier": ["error"],
     "react/jsx-filename-extension": [1, { extensions: [".tsx", ".ts"] }],
     "@typescript-eslint/explicit-function-return-type": "off",
-    "react/prop-types": "off"
+    "react/prop-types": "off",
+    "@typescript-eslint/camelcase": "off"
   },
   settings: {
     "import/extensions": [".js", ".jsx", ".ts", ".tsx"],

@@ -1,4 +1,5 @@
 import Header from "./Header/Header";
 import Container from "./Container/Container";
-import List from "./List/List";
-export { Header, Container, List };
+import PlayerGridView from "./PlayerGridView/PlayerGridView";
+import PlayerCard from "./PlayerCardView/PlayerCard";
+export { Header, Container, PlayerGridView, PlayerCard };
