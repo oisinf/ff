@@ -1,6 +1,10 @@
 import React from "react";
 import styled from "styled-components";
-import { HeaderUI, FFListUI } from "./Components";
+import { Header, Container } from "./components";
+import { ReactQueryDevtools } from "react-query-devtools";
+import { QueryCache, ReactQueryCacheProvider } from "react-query";
+
+const queryCache: QueryCache = new QueryCache();
 
 const ContainerDiv = styled.div`
   width: 100%;
@@ -10,10 +14,13 @@ const ContainerDiv = styled.div`
 `;
 const App: React.FC = () => {
   return (
-    <ContainerDiv>
-      <HeaderUI />
-      <FFListUI />
-    </ContainerDiv>
+    <ReactQueryCacheProvider queryCache={queryCache}>
+      <ContainerDiv>
+        <Header />
+        <Container />
+      </ContainerDiv>
+      <ReactQueryDevtools initialIsOpen />
+    </ReactQueryCacheProvider>
   );
 };
 
