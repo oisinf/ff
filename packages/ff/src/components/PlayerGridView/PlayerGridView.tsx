@@ -11,12 +11,13 @@ export type PlayerInfo = {
   web_name: string;
   photo: string;
   id: number;
+  element_type: number;
 };
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     root: {
-      backgroundColor: theme.palette.primary.dark,
+      backgroundColor: theme.palette.primary.main,
       borderRadius: 10
     }
   })
@@ -26,7 +27,12 @@ const PlayerGridView: React.FC<Props> = ({ players }) => {
   const classes = useStyles();
   return (
     <>
-      <Grid container spacing={2} className={classes.root}>
+      <Grid
+        container
+        spacing={2}
+        className={classes.root}
+        justify="space-around"
+      >
         {players.map((playerInfo: PlayerInfo, index) => {
           return (
             <Grid key={index} item>

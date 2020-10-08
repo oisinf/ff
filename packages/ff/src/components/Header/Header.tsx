@@ -5,15 +5,15 @@ import { makeStyles } from "@material-ui/core/styles";
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     root: {
-      margin: "auto !important",
+      marginTop: "20px",
+      marginBottom: "20px",
+      margin: "auto",
       width: "50%",
       backgroundColor: theme.palette.primary.main,
-      color: "white",
       padding: "40px",
       borderRadius: "10px",
       textAlign: "center",
-      display: "flex",
-      flexDirection: "column"
+      color: theme.palette.primary.contrastText
     }
   })
 );

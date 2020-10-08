@@ -8,12 +8,7 @@ import { createStyles } from "@material-ui/core";
 
 const useStyles = makeStyles(() =>
   createStyles({
-    root: {
-      margin: "30px",
-      borderRadius: "10p",
-      display: "flex",
-      flexDirection: "column"
-    }
+    root: { marginRight: "1em", marginLeft: "1em" }
   })
 );
 
