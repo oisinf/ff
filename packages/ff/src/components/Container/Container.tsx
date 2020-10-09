@@ -2,7 +2,11 @@ import React, { memo } from "react";
 import { QueryResult, useQuery } from "react-query";
 import axios, { AxiosResponse } from "axios";
 import { PlayerGridView } from "../index";
-import { PlayerInfo } from "../PlayerGridView/PlayerGridView";
+import {
+  PlayerInfo,
+  PosInfo,
+  TeamInfo
+} from "../PlayerGridView/PlayerGridView";
 import { makeStyles } from "@material-ui/core/styles";
 import { createStyles } from "@material-ui/core";
 
@@ -14,6 +18,8 @@ const useStyles = makeStyles(() =>
 
 export type FootballInfo = {
   elements: Array<PlayerInfo>;
+  element_types: Array<PosInfo>;
+  teams: Array<TeamInfo>;
 };
 
 const Container: React.FC = () => {
@@ -39,7 +45,11 @@ const Container: React.FC = () => {
         ))}
       {data && (
         <div className={classes.root} data-testid="ff-info">
-          <PlayerGridView players={data.elements} />
+          <PlayerGridView
+            players={data.elements}
+            teams={data.teams}
+            positions={data.element_types}
+          />
         </div>
       )}
     </>

@@ -12,10 +12,12 @@ import { PlayerInfo } from "../PlayerGridView/PlayerGridView";
 import { makeStyles } from "@material-ui/core/styles";
 import { useQuery } from "react-query";
 import photoMissing from "./photoMissing.png";
-import { getPlayerPngAndConvertToBase64 } from "../PlayerGridView/api";
+import axios from "axios";
 
 export type PlayerCardProps = {
   player: PlayerInfo;
+  playerTeam: string;
+  playerPos: string;
 };
 
 const useStyles = makeStyles((theme: Theme) =>
@@ -30,7 +32,9 @@ const useStyles = makeStyles((theme: Theme) =>
       textAlign: "center",
       padding: "5px"
     },
-    imgContainer: {},
+    imgContainer: {
+      textAlign: "center"
+    },
     cardContent: {
       display: "flex",
       flexDirection: "row",
@@ -38,18 +42,32 @@ const useStyles = makeStyles((theme: Theme) =>
       paddingTop: "8px"
     },
     stats: {
-      width: "40%"
+      display: "flex",
+      flexDirection: "column",
+      justifyContent: "space-between",
+      borderRadius: "10px",
+      paddingLeft: "8px",
+      paddingRight: "8px",
+      paddingTop: "8px"
     }
   })
 );
 
-const PlayerCard: React.FC<PlayerCardProps> = ({ player }) => {
+const PlayerCard: React.FC<PlayerCardProps> = ({
+  player,
+  playerPos,
+  playerTeam
+}) => {
   const classes = useStyles();
 
   const { error, isLoading, data } = useQuery(
     `ff_image${player.id}`,
     async (): Promise<string> => {
-      return await getPlayerPngAndConvertToBase64(player.photo);
+      const res = await axios.get(`png/${player.photo}`);
+      // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
+      // @ts-ignore
+      console.log(res.data);
+      return res.data;
     }
   );
 
@@ -62,29 +80,43 @@ const PlayerCard: React.FC<PlayerCardProps> = ({ player }) => {
           {(data || error) && (
             <img src={error ? photoMissing : data} alt={player.web_name} />
           )}
+          <Typography variant="h6">{playerTeam}</Typography>
+          <Typography variant="body1">{playerPos}</Typography>
         </div>
         <div className={classes.stats}>
-          <PInfo title="Pos." name="test" />
-          <PInfo title="" name="test" />
-          <PInfo title="Pos." name="test" />
+          {(playerPos === "GKP" || playerPos === "DEF") && (
+            <>
+              <Info stat={player.clean_sheets} title="Sheets" />
+              <Info stat={player.yellow_cards} title="Yellows" />
+            </>
+          )}
+          {(playerPos === "ATK" || playerPos === "MID") && (
+            <>
+              <Info stat={player.goals_scored} title="Goals" />
+              <Info stat={player.assists} title="Assists" />
+            </>
+          )}
+          <Info stat={player.total_points} title="Total" />
+          <Info stat={player.points_per_game} title="PPG" />
         </div>
       </CardContent>
     </Card>
   );
 };
 
-const PInfo: React.FC<{ title: string; name: string }> = ({ title, name }) => {
-  return (
-    <>
-      <Typography variant="h6">{title}</Typography>
-      <Typography variant="body1">{name}</Typography>
-    </>
-  );
-};
+const Info: React.FC<{ stat: number; title: string }> = React.memo(
+  ({ stat, title }) => {
+    return (
+      <Typography variant="body1">
+        <b>{stat}</b> {title}
+      </Typography>
+    );
+  }
+);
 
 export default memo(PlayerCard);
 
-//Per player, team, position, points per game %
+//Per player, team, position, points per game % bps = bonus point system
 //per position,
 // striker/mid -> goals, assists,
 // defender -> clean sheets,  yellow cards

@@ -3,8 +3,10 @@ import { createStyles, Grid, Theme } from "@material-ui/core";
 import PlayerCard from "../PlayerCardView/PlayerCard";
 import { makeStyles } from "@material-ui/core/styles";
 
-type Props = {
+export type PlayerGridViewProps = {
   players: Array<PlayerInfo>;
+  teams: Array<TeamInfo>;
+  positions: Array<PosInfo>;
 };
 
 export type PlayerInfo = {
@@ -12,6 +14,26 @@ export type PlayerInfo = {
   photo: string;
   id: number;
   element_type: number;
+  team: number;
+  goals_scored: number;
+  assists: number;
+  total_points: number;
+  points_per_game: number;
+  clean_sheets: number;
+  yellow_cards: number;
+  minutes: number;
+  bps: number;
+};
+
+export type TeamInfo = {
+  id: number;
+  name: string;
+  short_name: string;
+};
+
+export type PosInfo = {
+  id: number;
+  singular_name_short: string;
 };
 
 const useStyles = makeStyles((theme: Theme) =>
@@ -23,7 +45,11 @@ const useStyles = makeStyles((theme: Theme) =>
   })
 );
 
-const PlayerGridView: React.FC<Props> = ({ players }) => {
+const PlayerGridView: React.FC<PlayerGridViewProps> = ({
+  players,
+  positions,
+  teams
+}) => {
   const classes = useStyles();
   return (
     <>
@@ -36,7 +62,13 @@ const PlayerGridView: React.FC<Props> = ({ players }) => {
         {players.map((playerInfo: PlayerInfo, index) => {
           return (
             <Grid key={index} item>
-              <PlayerCard player={playerInfo} />
+              <PlayerCard
+                player={playerInfo}
+                playerTeam={teams[playerInfo.team - 1].short_name}
+                playerPos={
+                  positions[playerInfo.element_type - 1].singular_name_short
+                }
+              />
             </Grid>
           );
         })}
