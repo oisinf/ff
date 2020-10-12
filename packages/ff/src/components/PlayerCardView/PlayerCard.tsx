@@ -64,9 +64,6 @@ const PlayerCard: React.FC<PlayerCardProps> = ({
     `ff_image${player.id}`,
     async (): Promise<string> => {
       const res = await axios.get(`png/${player.photo}`);
-      // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
-      // @ts-ignore
-      console.log(res.data);
       return res.data;
     }
   );
