@@ -1,22 +1,30 @@
 import React, { memo } from "react";
-import styled from "styled-components";
 import { QueryResult, useQuery } from "react-query";
 import axios, { AxiosResponse } from "axios";
-import { List } from "../";
-import { PlayerInfo } from "../List/List";
+import { PlayerGridView } from "../index";
+import {
+  PlayerInfo,
+  PosInfo,
+  TeamInfo
+} from "../PlayerGridView/PlayerGridView";
+import { makeStyles } from "@material-ui/core/styles";
+import { createStyles } from "@material-ui/core";
 
-const StyledContainer = styled.div`
-  margin:30px
-  border-radius:10px;
-  display: flex;
-	flex-direction: column;
-`;
+const useStyles = makeStyles(() =>
+  createStyles({
+    root: { marginRight: "1em", marginLeft: "1em" }
+  })
+);
 
 export type FootballInfo = {
   elements: Array<PlayerInfo>;
+  element_types: Array<PosInfo>;
+  teams: Array<TeamInfo>;
 };
 
 const Container: React.FC = () => {
+  const classes = useStyles();
+
   const { isLoading, isError, data }: QueryResult<FootballInfo> = useQuery(
     "ff_request",
     async () => {
@@ -36,9 +44,13 @@ const Container: React.FC = () => {
           <div>{isLoading ? "Loading Data..." : "Error loading data.."} </div>
         ))}
       {data && (
-        <StyledContainer data-testid="ff-info">
-          <List players={data.elements} />
-        </StyledContainer>
+        <div className={classes.root} data-testid="ff-info">
+          <PlayerGridView
+            players={data.elements}
+            teams={data.teams}
+            positions={data.element_types}
+          />
+        </div>
       )}
     </>
   );

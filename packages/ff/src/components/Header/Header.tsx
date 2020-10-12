@@ -1,22 +1,30 @@
 import React from "react";
-import { Typography } from "@material-ui/core";
-import styled from "styled-components";
+import { createStyles, Theme, Typography } from "@material-ui/core";
+import { makeStyles } from "@material-ui/core/styles";
 
-const StyledHeader = styled(Typography)`
-  margin: auto !important;
-  width: 50%;
-  background-color: rgb(55, 0, 66);
-  color: white;
-  padding: 40px;
-  border-radius: 10px;
-  text-align: center;
-  margin: 30px;
-  display: flex;
-  flex-direction: column;
-`;
+const useStyles = makeStyles((theme: Theme) =>
+  createStyles({
+    root: {
+      marginTop: "20px",
+      marginBottom: "20px",
+      margin: "auto",
+      width: "50%",
+      backgroundColor: theme.palette.primary.main,
+      padding: "40px",
+      borderRadius: "10px",
+      textAlign: "center",
+      color: theme.palette.primary.contrastText
+    }
+  })
+);
 
 const Header: React.FC = () => {
-  return <StyledHeader variant="h3">Fantasy Football</StyledHeader>;
+  const classes = useStyles();
+  return (
+    <Typography variant="h3" className={classes.root}>
+      Fantasy Football
+    </Typography>
+  );
 };
 
 export default Header;

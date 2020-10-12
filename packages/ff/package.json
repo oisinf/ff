@@ -13,14 +13,12 @@
     "@types/react": "16.9.5",
     "@types/react-dom": "16.9.1",
     "@types/react-query": "^1.1.2",
-    "@types/styled-components": "^4.4.3",
     "axios": "^0.19.2",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
     "react-hot-loader": "^4.12.21",
     "react-query": "^2.23.0",
-    "react-scripts": "^3.4.3",
-    "styled-components": "^4.4.1"
+    "react-scripts": "^3.4.3"
   },
   "production": [
     ">0.2%",
