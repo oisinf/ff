@@ -1,21 +1,21 @@
 module.exports = {
-  parser: "@typescript-eslint/parser",
-  plugins: ["@typescript-eslint", "prettier", "react"],
+  parser: '@typescript-eslint/parser',
+  plugins: ['@typescript-eslint', 'prettier', 'react'],
   extends: [
-    "eslint:recommended",
-    "plugin:@typescript-eslint/eslint-recommended",
-    "plugin:react/recommended", // Uses the recommended rules from @eslint-plugin-react
-    "plugin:@typescript-eslint/recommended", // Uses the recommended rules from @typescript-eslint/eslint-plugin
-    "prettier"
+    'eslint:recommended',
+    'plugin:@typescript-eslint/eslint-recommended',
+    'plugin:react/recommended', // Uses the recommended rules from @eslint-plugin-react
+    'plugin:@typescript-eslint/recommended', // Uses the recommended rules from @typescript-eslint/eslint-plugin
+    'prettier'
   ],
   parserOptions: {
     ecmaVersion: 2018,
-    sourceType: "module",
+    sourceType: 'module',
     ecmaFeatures: {
       jsx: true
     },
-    project: "./tsconfig.json",
-    tsconfigRootDir: "."
+    project: './tsconfig.json',
+    tsconfigRootDir: '.'
   },
   env: {
     browser: true,
@@ -23,21 +23,21 @@ module.exports = {
     es6: true
   },
   rules: {
-    "prettier/prettier": ["error"],
-    "react/jsx-filename-extension": [1, { extensions: [".tsx", ".ts"] }],
-    "@typescript-eslint/explicit-function-return-type": "off",
-    "react/prop-types": "off",
-    "@typescript-eslint/camelcase": "off",
-    "react/display-name": "off"
+    'prettier/prettier': ['error'],
+    'react/jsx-filename-extension': [1, { extensions: ['.tsx', '.ts'] }],
+    '@typescript-eslint/explicit-function-return-type': 'off',
+    'react/prop-types': 'off',
+    '@typescript-eslint/camelcase': 'off',
+    'react/display-name': 'off'
   },
   settings: {
-    "import/extensions": [".js", ".jsx", ".ts", ".tsx"],
-    "import/parsers": {
-      "@typescript-eslint/parser": [".ts", ".tsx"]
+    'import/extensions': ['.js', '.jsx', '.ts', '.tsx'],
+    'import/parsers': {
+      '@typescript-eslint/parser': ['.ts', '.tsx']
     },
-    "import/resolver": {
+    'import/resolver': {
       node: {
-        extensions: [".js", ".jsx", ".ts", ".tsx"]
+        extensions: ['.js', '.jsx', '.ts', '.tsx']
       }
     }
   }

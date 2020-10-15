@@ -1,7 +1,7 @@
-import React, { memo } from "react";
-import { createStyles, Grid, Theme } from "@material-ui/core";
-import PlayerCard from "../PlayerCardView/PlayerCard";
-import { makeStyles } from "@material-ui/core/styles";
+import React, { memo } from 'react';
+import { createStyles, Grid, Theme } from '@material-ui/core';
+import PlayerCard from '../PlayerCardView/PlayerCard';
+import { makeStyles } from '@material-ui/core/styles';
 
 export type PlayerGridViewProps = {
   players: Array<PlayerInfo>;
@@ -45,29 +45,18 @@ const useStyles = makeStyles((theme: Theme) =>
   })
 );
 
-const PlayerGridView: React.FC<PlayerGridViewProps> = ({
-  players,
-  positions,
-  teams
-}) => {
+const PlayerGridView: React.FC<PlayerGridViewProps> = ({ players, positions, teams }) => {
   const classes = useStyles();
   return (
     <>
-      <Grid
-        container
-        spacing={2}
-        className={classes.root}
-        justify="space-around"
-      >
+      <Grid container spacing={2} className={classes.root} justify="space-around">
         {players.map((playerInfo: PlayerInfo, index) => {
           return (
             <Grid key={index} item>
               <PlayerCard
                 player={playerInfo}
                 playerTeam={teams[playerInfo.team - 1].short_name}
-                playerPos={
-                  positions[playerInfo.element_type - 1].singular_name_short
-                }
+                playerPos={positions[playerInfo.element_type - 1].singular_name_short}
               />
             </Grid>
           );

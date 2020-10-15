@@ -1,19 +1,17 @@
-import express from "express";
-import http from "http";
-import path from "path";
-import routes from "./routes.js";
+import express from 'express';
+import http from 'http';
+import path from 'path';
+import routes from './routes.js';
 const app = express();
 
 const httpServer = http.createServer(app);
 routes(app);
 
-if (process.env.NODE_ENV === "production") {
-  app.use(express.static("../ff/build"));
+if (process.env.NODE_ENV === 'production') {
+  app.use(express.static('../ff/build'));
 
-  app.get("*", (req, res) => {
-    res.sendFile(
-      path.resolve(__dirname, "packages", "ff", "build", "index.html")
-    );
+  app.get('*', (req, res) => {
+    res.sendFile(path.resolve(__dirname, 'packages', 'ff', 'build', 'index.html'));
   });
 }
 
