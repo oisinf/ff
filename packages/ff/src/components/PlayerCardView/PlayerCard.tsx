@@ -96,8 +96,3 @@ const Info: React.FC<{ stat: number; title: string }> = React.memo(({ stat, titl
 });
 
 export default memo(PlayerCard);
-
-//Per player, team, position, points per game % bps = bonus point system
-//per position,
-// striker/mid -> goals, assists,
-// defender -> clean sheets,  yellow cards

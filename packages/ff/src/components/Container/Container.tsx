@@ -1,7 +1,7 @@
 import React, { memo } from 'react';
 import { QueryResult, useQuery } from 'react-query';
 import axios, { AxiosResponse } from 'axios';
-import { PlayerGridView } from '../index';
+import { FilterCard, PlayerGridView } from '../index';
 import { PlayerInfo, PosInfo, TeamInfo } from '../PlayerGridView/PlayerGridView';
 import { makeStyles } from '@material-ui/core/styles';
 import { createStyles } from '@material-ui/core';
@@ -33,6 +33,7 @@ const Container: React.FC = () => {
       {isLoading || (isError && <div>{isLoading ? 'Loading Data...' : 'Error loading data..'} </div>)}
       {data && (
         <div className={classes.root} data-testid="ff-info">
+          <FilterCard teams={data.teams} positions={data.element_types} />
           <PlayerGridView players={data.elements} teams={data.teams} positions={data.element_types} />
         </div>
       )}
