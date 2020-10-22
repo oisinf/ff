@@ -23,3 +23,5 @@ deploy:
     heroku container:release web --app $FANTASY_FOOTBALL_APP_NAME;
   api_key:
     secure: $HEROKU_API_KEY
+  on:
+    branch: develop
