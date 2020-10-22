@@ -5,7 +5,7 @@ import { FilterCard, PlayerGridView } from '../index';
 import { PlayerInfo, PosInfo, TeamInfo } from '../PlayerGridView/PlayerGridView';
 import { makeStyles } from '@material-ui/core/styles';
 import { createStyles } from '@material-ui/core';
-import reducer, { initialState } from '../../reducers/ContainerReducer';
+import reducer, { ContainerAction, ContainerState, initialState } from '../../reducers/ContainerReducer';
 
 const useStyles = makeStyles(() =>
   createStyles({
@@ -19,9 +19,15 @@ export type FootballInfo = {
   teams: Array<TeamInfo>;
 };
 
+export const ContainerContext = React.createContext<{ state: ContainerState; dispatch: React.Dispatch<ContainerAction> }>({
+  state: initialState,
+  dispatch: () => null
+});
+
 const Container: React.FC = () => {
   const classes = useStyles();
-  const [state] = useReducer(reducer, initialState);
+  const [state, dispatch] = useReducer(reducer, initialState);
+
   const { isLoading, isError, data }: QueryResult<FootballInfo> = useQuery('ff_request', async () => {
     const res: AxiosResponse<FootballInfo> = await axios.get<FootballInfo>('football-stuff');
     return res.data;
@@ -33,10 +39,12 @@ const Container: React.FC = () => {
     <>
       {isLoading || (isError && <div>{isLoading ? 'Loading Data...' : 'Error loading data..'} </div>)}
       {data && (
-        <div className={classes.root} data-testid="ff-info">
-          <FilterCard teams={data.teams} positions={data.element_types} store={state} />
-          <PlayerGridView players={data.elements} teams={data.teams} positions={data.element_types} store={state} />
-        </div>
+        <ContainerContext.Provider value={{ state, dispatch }}>
+          <div className={classes.root}>
+            <FilterCard teams={data.teams} positions={data.element_types} />
+            <PlayerGridView players={data.elements} teams={data.teams} positions={data.element_types} />
+          </div>
+        </ContainerContext.Provider>
       )}
     </>
   );

@@ -1,12 +1,12 @@
 import { createStyles, FormControl, InputLabel, MenuItem, Paper, Select, Theme } from '@material-ui/core';
-import React, { useReducer } from 'react';
+import React, { useContext } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import { PosInfo, TeamInfo } from '../PlayerGridView/PlayerGridView';
-import reducer, { ContainerActionTypes, ContainerState, initialState } from '../../reducers/ContainerReducer';
+import { ContainerActionTypes, VALUE_ALL } from '../../reducers/ContainerReducer';
+import { ContainerContext } from '../Container/Container';
 export type FilterCardProps = {
   teams: Array<TeamInfo>;
   positions: Array<PosInfo>;
-  store: ContainerState;
 };
 
 const useStyles = makeStyles((theme: Theme) =>
@@ -14,8 +14,8 @@ const useStyles = makeStyles((theme: Theme) =>
     root: {
       width: 'fit-content',
       backgroundColor: theme.palette.primary.main,
-      padding: '8px',
-      borderRadius: '10px',
+      padding: 8,
+      borderRadius: 10,
       margin: '0 auto 24px auto'
     },
     formControl: {
@@ -32,19 +32,19 @@ const useStyles = makeStyles((theme: Theme) =>
   })
 );
 
-const FilterCard: React.FC<FilterCardProps> = ({ teams, positions, store }) => {
+const FilterCard: React.FC<FilterCardProps> = ({ teams, positions }) => {
   const classes = useStyles();
-  const [reducerState, dispatch] = useReducer(reducer, store);
+  const { state, dispatch } = useContext(ContainerContext);
   return (
     <Paper className={classes.root}>
       <FormControl className={classes.formControl}>
         <InputLabel className={classes.label}>Position</InputLabel>
         <Select
-          value={reducerState.position}
+          value={state.position}
           onChange={e =>
             dispatch({
               type: ContainerActionTypes.POSITION,
-              payload: e.target.value === 'All' ? (e.target.value as string) : (e.target.value as number)
+              payload: e.target.value === VALUE_ALL ? (e.target.value as string) : (e.target.value as number)
             })
           }
         >
@@ -62,11 +62,11 @@ const FilterCard: React.FC<FilterCardProps> = ({ teams, positions, store }) => {
       <FormControl className={classes.formControl}>
         <InputLabel className={classes.label}>Team</InputLabel>
         <Select
-          value={reducerState.team}
+          value={state.team}
           onChange={e =>
             dispatch({
               type: ContainerActionTypes.TEAM,
-              payload: e.target.value === 'All' ? (e.target.value as string) : (e.target.value as number)
+              payload: e.target.value === VALUE_ALL ? (e.target.value as string) : (e.target.value as number)
             })
           }
         >
@@ -81,12 +81,12 @@ const FilterCard: React.FC<FilterCardProps> = ({ teams, positions, store }) => {
             })}
         </Select>
       </FormControl>
-      <FormControl className={classes.formControl}>
+      {/*    <FormControl className={classes.formControl}>
         <InputLabel className={classes.label}>Stat</InputLabel>
         <Select value={''}>
           <MenuItem value="test">Test</MenuItem>
         </Select>
-      </FormControl>
+      </FormControl>*/}
     </Paper>
   );
 };

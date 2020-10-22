@@ -6,12 +6,12 @@ import { createStyles, Theme } from '@material-ui/core';
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     root: {
-      width: '100%',
-      height: '100%',
-      display: 'flex',
-      flexDirection: 'column',
+      width: '99vw',
+      height: '100vh',
       backgroundColor: theme.palette.secondary.dark,
-      borderRadius: '10px'
+      borderRadius: 10,
+      padding: 4,
+      paddingTop: 16
     }
   })
 );

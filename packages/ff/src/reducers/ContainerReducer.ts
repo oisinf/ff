@@ -1,13 +1,15 @@
 export type ContainerState = { position: number | string; team: number | string };
 export type ContainerAction = { type: string; payload: number | string };
 
+export const VALUE_ALL = 'All';
+
 export enum ContainerActionTypes {
   POSITION = 'setPosition',
   TEAM = 'setTeam'
 }
 export const initialState: ContainerState = {
-  position: 'All',
-  team: 'All'
+  position: VALUE_ALL,
+  team: VALUE_ALL
 };
 
 const reducer = (state: ContainerState, action: ContainerAction): ContainerState => {

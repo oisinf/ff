@@ -15,17 +15,21 @@ export type PlayerCardProps = {
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     root: {
-      width: 200,
-      height: 200,
       backgroundColor: theme.palette.primary.light,
-      color: theme.palette.primary.contrastText
+      color: theme.palette.primary.contrastText,
+      minWidth: 180,
+      minHeight: 180
     },
     header: {
       textAlign: 'center',
-      padding: '5px'
+      padding: 5
     },
     imgContainer: {
       textAlign: 'center'
+    },
+    img: {
+      height: 80,
+      width: 80
     },
     cardContent: {
       display: 'flex',
@@ -37,10 +41,10 @@ const useStyles = makeStyles((theme: Theme) =>
       display: 'flex',
       flexDirection: 'column',
       justifyContent: 'space-between',
-      borderRadius: '10px',
-      paddingLeft: '8px',
-      paddingRight: '8px',
-      paddingTop: '8px'
+      borderRadius: 10,
+      paddingLeft: 8,
+      paddingRight: 8,
+      paddingTop: 8
     }
   })
 );
@@ -62,7 +66,7 @@ const PlayerCard: React.FC<PlayerCardProps> = ({ player, playerPos, playerTeam }
       <CardContent className={classes.cardContent}>
         <div className={classes.imgContainer}>
           {isLoading && !data && !error && <CircularProgress />}
-          {(data || error) && <img src={error ? photoMissing : data} alt={player.web_name} />}
+          {(data || error) && <img className={classes.img} src={error ? photoMissing : data} alt={player.web_name} />}
           <Typography variant="h6">{playerTeam}</Typography>
           <Typography variant="body1">{playerPos}</Typography>
         </div>
