@@ -1,18 +1,18 @@
-import React from "react";
-import { createStyles, Theme, Typography } from "@material-ui/core";
-import { makeStyles } from "@material-ui/core/styles";
+import React from 'react';
+import { createStyles, Theme, Typography } from '@material-ui/core';
+import { makeStyles } from '@material-ui/core/styles';
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     root: {
-      marginTop: "20px",
-      marginBottom: "20px",
-      margin: "auto",
-      width: "50%",
+      marginTop: 20,
+      marginBottom: 20,
+      margin: 'auto',
+      width: '50%',
       backgroundColor: theme.palette.primary.main,
-      padding: "40px",
-      borderRadius: "10px",
-      textAlign: "center",
+      padding: 40,
+      borderRadius: 10,
+      textAlign: 'center',
       color: theme.palette.primary.contrastText
     }
   })

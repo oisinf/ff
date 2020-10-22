@@ -1,8 +1,9 @@
-import React, { memo } from "react";
-import { createStyles, Grid, Theme } from "@material-ui/core";
-import PlayerCard from "../PlayerCardView/PlayerCard";
-import { makeStyles } from "@material-ui/core/styles";
-
+import React, { memo, useContext } from 'react';
+import { createStyles, Grid, Theme } from '@material-ui/core';
+import PlayerCard from '../PlayerCardView/PlayerCard';
+import { makeStyles } from '@material-ui/core/styles';
+import { ContainerContext } from '../Container/Container';
+import { VALUE_ALL } from '../../reducers/ContainerReducer';
 export type PlayerGridViewProps = {
   players: Array<PlayerInfo>;
   teams: Array<TeamInfo>;
@@ -34,6 +35,7 @@ export type TeamInfo = {
 export type PosInfo = {
   id: number;
   singular_name_short: string;
+  singular_name: string;
 };
 
 const useStyles = makeStyles((theme: Theme) =>
@@ -45,32 +47,30 @@ const useStyles = makeStyles((theme: Theme) =>
   })
 );
 
-const PlayerGridView: React.FC<PlayerGridViewProps> = ({
-  players,
-  positions,
-  teams
-}) => {
+const PlayerGridView: React.FC<PlayerGridViewProps> = ({ players, positions, teams }) => {
   const classes = useStyles();
+  const { state } = useContext(ContainerContext);
+
   return (
     <>
-      <Grid
-        container
-        spacing={2}
-        className={classes.root}
-        justify="space-around"
-      >
-        {players.map((playerInfo: PlayerInfo, index) => {
-          return (
-            <Grid key={index} item>
-              <PlayerCard
-                player={playerInfo}
-                playerTeam={teams[playerInfo.team - 1].short_name}
-                playerPos={
-                  positions[playerInfo.element_type - 1].singular_name_short
-                }
-              />
-            </Grid>
-          );
+      <Grid container spacing={4} className={classes.root} justify="flex-start">
+        {players.map((playerInfo, index) => {
+          if (
+            (state.team === VALUE_ALL && state.position === VALUE_ALL) ||
+            (state.team === playerInfo.team && state.position === VALUE_ALL) ||
+            (state.team === VALUE_ALL && state.position === playerInfo.element_type) ||
+            (state.team === playerInfo.team && state.position === playerInfo.element_type)
+          ) {
+            return (
+              <Grid key={index} item>
+                <PlayerCard
+                  player={playerInfo}
+                  playerTeam={teams[playerInfo.team - 1].short_name}
+                  playerPos={positions[playerInfo.element_type - 1].singular_name_short}
+                />
+              </Grid>
+            );
+          }
         })}
       </Grid>
     </>

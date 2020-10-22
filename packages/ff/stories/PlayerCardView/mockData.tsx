@@ -1,8 +1,8 @@
-import { PlayerInfo } from "../../src/components/PlayerGridView/PlayerGridView";
+import { PlayerInfo } from '../../src/components/PlayerGridView/PlayerGridView';
 
 export const testPlayer: PlayerInfo = {
-  web_name: "Test Name",
-  photo: "37605.jpg",
+  web_name: 'Test Name',
+  photo: '37605.jpg',
   id: 1,
   goals_scored: 5,
   assists: 4,
@@ -19,5 +19,5 @@ export const testPlayer: PlayerInfo = {
 export const imgFailPlayer: PlayerInfo = {
   ...testPlayer,
   id: 9999,
-  photo: "fail.jpg"
+  photo: 'fail.jpg'
 };
