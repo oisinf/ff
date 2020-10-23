@@ -53,7 +53,7 @@ const PlayerGridView: React.FC<PlayerGridViewProps> = ({ players, positions, tea
 
   return (
     <>
-      <Grid container spacing={4} className={classes.root} justify="flex-start">
+      <Grid container spacing={4} className={classes.root} justify="space-evenly">
         {players.map((playerInfo, index) => {
           if (
             (state.team === VALUE_ALL && state.position === VALUE_ALL) ||
@@ -62,15 +62,14 @@ const PlayerGridView: React.FC<PlayerGridViewProps> = ({ players, positions, tea
             (state.team === playerInfo.team && state.position === playerInfo.element_type)
           ) {
             return (
-              <Grid key={index} item>
-                <PlayerCard
-                  player={playerInfo}
-                  playerTeam={teams[playerInfo.team - 1].short_name}
-                  playerPos={positions[playerInfo.element_type - 1].singular_name_short}
-                />
-              </Grid>
+              <PlayerCard
+                player={playerInfo}
+                playerTeam={teams[playerInfo.team - 1].short_name}
+                playerPos={positions[playerInfo.element_type - 1].singular_name_short}
+                key={index}
+              />
             );
-          }
+          } else return undefined;
         })}
       </Grid>
     </>

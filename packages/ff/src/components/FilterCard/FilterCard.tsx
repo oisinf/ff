@@ -16,14 +16,16 @@ const useStyles = makeStyles((theme: Theme) =>
       backgroundColor: theme.palette.primary.main,
       padding: 8,
       borderRadius: 10,
-      margin: '0 auto 24px auto'
+      margin: '0 auto 24px auto',
+      display: 'flex',
+      justifyContent: 'center',
+      flexWrap: 'wrap'
     },
     formControl: {
       backgroundColor: theme.palette.secondary.light,
-      minWidth: '200px',
-      marginRight: '16px',
-      marginLeft: '16px',
-      borderRadius: '10px',
+      minWidth: 200,
+      borderRadius: 10,
+      margin: '4px 16px 4px 16px',
       padding: '0px 16px 8px 16px'
     },
     label: {

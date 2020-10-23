@@ -1,5 +1,5 @@
 import React, { memo } from 'react';
-import { Card, CardContent, CardHeader, CircularProgress, createStyles, Theme, Typography } from '@material-ui/core';
+import { Card, CardContent, CardHeader, CircularProgress, createStyles, Grid, Theme, Typography } from '@material-ui/core';
 import { PlayerInfo } from '../PlayerGridView/PlayerGridView';
 import { makeStyles } from '@material-ui/core/styles';
 import { useQuery } from 'react-query';
@@ -61,33 +61,35 @@ const PlayerCard: React.FC<PlayerCardProps> = ({ player, playerPos, playerTeam }
   );
 
   return (
-    <Card className={classes.root}>
-      <CardHeader title={player.web_name} className={classes.header} />
-      <CardContent className={classes.cardContent}>
-        <div className={classes.imgContainer}>
-          {isLoading && !data && !error && <CircularProgress />}
-          {(data || error) && <img className={classes.img} src={error ? photoMissing : data} alt={player.web_name} />}
-          <Typography variant="h6">{playerTeam}</Typography>
-          <Typography variant="body1">{playerPos}</Typography>
-        </div>
-        <div className={classes.stats}>
-          {(playerPos === 'GKP' || playerPos === 'DEF') && (
-            <>
-              <Info stat={player.clean_sheets} title="Sheets" />
-              <Info stat={player.yellow_cards} title="Yellows" />
-            </>
-          )}
-          {(playerPos === 'ATK' || playerPos === 'MID') && (
-            <>
-              <Info stat={player.goals_scored} title="Goals" />
-              <Info stat={player.assists} title="Assists" />
-            </>
-          )}
-          <Info stat={player.total_points} title="Total" />
-          <Info stat={player.points_per_game} title="PPG" />
-        </div>
-      </CardContent>
-    </Card>
+    <Grid item>
+      <Card className={classes.root}>
+        <CardHeader title={player.web_name} className={classes.header} />
+        <CardContent className={classes.cardContent}>
+          <div className={classes.imgContainer}>
+            {isLoading && !data && !error && <CircularProgress size={80} color="secondary" />}
+            {(data || error) && <img className={classes.img} src={error ? photoMissing : data} alt={player.web_name} />}
+            <Typography variant="h6">{playerTeam}</Typography>
+            <Typography variant="body1">{playerPos}</Typography>
+          </div>
+          <div className={classes.stats}>
+            {(playerPos === 'GKP' || playerPos === 'DEF') && (
+              <>
+                <Info stat={player.clean_sheets} title="Sheets" />
+                <Info stat={player.yellow_cards} title="Yellows" />
+              </>
+            )}
+            {(playerPos === 'ATK' || playerPos === 'MID') && (
+              <>
+                <Info stat={player.goals_scored} title="Goals" />
+                <Info stat={player.assists} title="Assists" />
+              </>
+            )}
+            <Info stat={player.total_points} title="Total" />
+            <Info stat={player.points_per_game} title="PPG" />
+          </div>
+        </CardContent>
+      </Card>
+    </Grid>
   );
 };
 

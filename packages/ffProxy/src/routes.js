@@ -21,6 +21,6 @@ export default app => {
         ).toString('base64')}`;
         res.send(base64);
       })
-      .catch(e => res.status(500).json({ type: 'error', message: e }));
+      .catch(() => res.status(404).json({ type: 'error', message: 'Resource not found' }));
   });
 };
