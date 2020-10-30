@@ -12,7 +12,7 @@ const App: React.FC = () => {
     <ReactQueryCacheProvider queryCache={queryCache}>
       <ThemeProvider theme={theme}>
         <Root />
-        <ReactQueryDevtools initialIsOpen />
+        <ReactQueryDevtools />
       </ThemeProvider>
     </ReactQueryCacheProvider>
   );

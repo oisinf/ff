@@ -28,7 +28,8 @@ module.exports = {
     '@typescript-eslint/explicit-function-return-type': 'off',
     'react/prop-types': 'off',
     '@typescript-eslint/camelcase': 'off',
-    'react/display-name': 'off'
+    'react/display-name': 'off',
+    '@typescript-eslint/ban-ts-ignore': 'off'
   },
   settings: {
     'import/extensions': ['.js', '.jsx', '.ts', '.tsx'],

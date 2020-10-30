@@ -4,6 +4,8 @@ import PlayerCard from '../PlayerCardView/PlayerCard';
 import { makeStyles } from '@material-ui/core/styles';
 import { ContainerContext } from '../Container/Container';
 import { VALUE_ALL } from '../../reducers/ContainerReducer';
+import { QueryResult, useQuery } from 'react-query';
+import axios from 'axios';
 export type PlayerGridViewProps = {
   players: Array<PlayerInfo>;
   teams: Array<TeamInfo>;
@@ -50,7 +52,11 @@ const useStyles = makeStyles((theme: Theme) =>
 const PlayerGridView: React.FC<PlayerGridViewProps> = ({ players, positions, teams }) => {
   const classes = useStyles();
   const { state } = useContext(ContainerContext);
-
+  const { isLoading, data }: QueryResult<Array<string>> = useQuery('ff_images', async () => {
+    const pngs: string[] = players.map(p => p.photo);
+    const res = await axios.get('player_imgs', { params: { pngs } });
+    return res.data;
+  });
   return (
     <>
       <Grid container spacing={4} className={classes.root} justify="space-evenly">
@@ -67,6 +73,7 @@ const PlayerGridView: React.FC<PlayerGridViewProps> = ({ players, positions, tea
                 playerTeam={teams[playerInfo.team - 1].short_name}
                 playerPos={positions[playerInfo.element_type - 1].singular_name_short}
                 key={index}
+                img={isLoading ? null : data?.[index]}
               />
             );
           } else return undefined;

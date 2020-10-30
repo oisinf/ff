@@ -39,7 +39,7 @@ const FilterCard: React.FC<FilterCardProps> = ({ teams, positions }) => {
   const { state, dispatch } = useContext(ContainerContext);
   return (
     <Paper className={classes.root}>
-      <FormControl className={classes.formControl}>
+      <FormControl className={classes.formControl} data-qa="filter-position">
         <InputLabel className={classes.label}>Position</InputLabel>
         <Select
           value={state.position}
@@ -61,7 +61,7 @@ const FilterCard: React.FC<FilterCardProps> = ({ teams, positions }) => {
             })}
         </Select>
       </FormControl>
-      <FormControl className={classes.formControl}>
+      <FormControl className={classes.formControl} data-qa="filter-team">
         <InputLabel className={classes.label}>Team</InputLabel>
         <Select
           value={state.team}
