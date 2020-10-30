@@ -1,5 +1,7 @@
-FROM node:14 as prod
+FROM cypress/base
+RUN npm install
 
+FROM node:14 as prod
 WORKDIR /app
 COPY package*.json ./
 COPY lerna.json ./
@@ -8,6 +10,8 @@ COPY ./packages/ffProxy/package*json ./packages/ffProxy/
 RUN npm install
 COPY . .
 RUN npm run bootstrap
+
+RUN run npm ui_tests
 
 ENV NODE_ENV=production
 RUN npm run build_ff_ui
