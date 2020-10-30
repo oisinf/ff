@@ -11,7 +11,7 @@ RUN npm install
 COPY . .
 RUN npm run bootstrap
 
-RUN run npm ui_tests
+RUN npm run ui_tests
 
 ENV NODE_ENV=production
 RUN npm run build_ff_ui
