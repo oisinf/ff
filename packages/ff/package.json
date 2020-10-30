@@ -8,7 +8,7 @@
     "test": "react-scripts test",
     "eject": "react-scripts eject",
     "cypress:open": "cypress open",
-    "cypress:run": "wait-on http://localhost:3000 && cypress run --browser chrome"
+    "cypress:run": "wait-on http://localhost:3000 && cypress run"
   },
   "dependencies": {
     "@material-ui/core": "^4.11.0",
