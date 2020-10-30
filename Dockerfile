@@ -1,4 +1,5 @@
-FROM node:14 as build
+FROM node:14 as prod
+
 WORKDIR /app
 COPY package*.json ./
 COPY lerna.json ./
@@ -8,12 +9,6 @@ RUN npm install
 COPY . .
 RUN npm run bootstrap
 
-FROM cypress/base as test
-COPY --from=build . .
-RUN npm install
-RUN npm run ui_tests
-
-FROM build as prod
 ENV NODE_ENV=production
 RUN npm run build_ff_ui
 CMD ["npm", "run", "start_prod_server"]
