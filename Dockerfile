@@ -1,3 +1,6 @@
+FROM cypress/base
+RUN npm install
+
 FROM node:14 as prod
 
 WORKDIR /app
