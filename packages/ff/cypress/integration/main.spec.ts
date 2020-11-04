@@ -1,6 +1,21 @@
 describe('Main test', () => {
-  it('should visit localhost', () => {
+  it('should display player cards, filter players correctly', () => {
     cy.visit('/');
+
+    cy.server();
+
+    //stub images res
+    cy.route({
+      method: 'GET',
+      url: '/player_imgs?**',
+      response: []
+    });
+
+    //alias images responses
+    // cy.route({
+    //   method: 'GET',
+    //   url: '/player_imgs?**'
+    // }).as('getPlayerImages');
 
     cy.contains('Fantasy Football');
     cy.contains('Loading...');
@@ -18,7 +33,9 @@ describe('Main test', () => {
     cy.dataQa('filter-team').should('contain', 'Arsenal');
     cy.dataQa('player-card').should('be.visible');
     cy.dataQa('player-team').should('contain', 'ARS');
-    //TODO get snapshot working
+
+    //wait for aliased response
+    // cy.wait('@getPlayerImages');
     cy.document().toMatchImageSnapshot();
   });
 });

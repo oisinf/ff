@@ -8,7 +8,7 @@ export type PlayerCardProps = {
   player: PlayerInfo;
   playerTeam: string;
   playerPos: string;
-  img: string | undefined | null;
+  img: string | null;
 };
 
 const useStyles = makeStyles((theme: Theme) =>
@@ -57,8 +57,11 @@ const PlayerCard: React.FC<PlayerCardProps> = ({ player, playerPos, playerTeam, 
         <CardHeader title={player.web_name} className={classes.header} />
         <CardContent className={classes.cardContent}>
           <div className={classes.imgContainer}>
-            {!img && <CircularProgress size={80} color="secondary" />}
-            {img && <img className={classes.img} src={img === 'not_found' ? photoMissing : img} alt={player.web_name} />}
+            {img === 'LOADING' ? (
+              <CircularProgress size={80} color="secondary" />
+            ) : (
+              <img className={classes.img} src={img === 'not_found' || !img ? photoMissing : img} alt={player.web_name} />
+            )}
             <Typography variant="h6" data-qa="player-team">
               {playerTeam}
             </Typography>

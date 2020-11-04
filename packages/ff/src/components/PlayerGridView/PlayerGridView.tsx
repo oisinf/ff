@@ -73,7 +73,7 @@ const PlayerGridView: React.FC<PlayerGridViewProps> = ({ players, positions, tea
                 playerTeam={teams[playerInfo.team - 1].short_name}
                 playerPos={positions[playerInfo.element_type - 1].singular_name_short}
                 key={index}
-                img={isLoading ? null : data?.[index]}
+                img={isLoading ? 'LOADING' : data?.[index] ?? null}
               />
             );
           } else return undefined;
