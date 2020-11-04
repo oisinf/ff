@@ -38,7 +38,9 @@ describe('Main test', () => {
     // cy.wait('@getPlayerImages');
     cy.document().toMatchImageSnapshot({
       threshold: 50, // Amount in pixels or percentage before snapshot image is invalid
-      thresholdType: 'percent'
+      thresholdType: 'percent',
+      name: 'mainTestGoalkeepers',
+      createDiffImage: true
     });
   });
 });
