@@ -2,14 +2,14 @@ describe('Main test', () => {
   it('should display player cards, filter players correctly', () => {
     cy.visit('/');
 
-    // cy.server();
+    cy.server();
 
     //stub images res
-    // cy.route({
-    //   method: 'GET',
-    //   url: '/player_imgs?**',
-    //   response: []
-    // });
+    cy.route({
+      method: 'GET',
+      url: '/player_imgs?**',
+      response: []
+    });
 
     //alias images responses
     // cy.route({
