@@ -9,7 +9,7 @@
     "eject": "react-scripts eject",
     "cypress:open": "cypress open",
     "cypress:run": "wait-on http://localhost:3000 && cypress run",
-    "cypress:dashboard_run": "wait-on http://localhost:3000 && cypress run --record"
+    "cypress:dashboard_run": "wait-on http://localhost:3000 && cypress run --record --key CYPRESS_RECORD_KEY"
   },
   "dependencies": {
     "@material-ui/core": "^4.11.0",
