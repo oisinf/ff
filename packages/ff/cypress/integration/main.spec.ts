@@ -36,6 +36,9 @@ describe('Main test', () => {
 
     //wait for aliased response
     // cy.wait('@getPlayerImages');
-    cy.document().toMatchImageSnapshot();
+    cy.document().toMatchImageSnapshot({
+      threshold: 2, // Amount in pixels or percentage before snapshot image is invalid
+      thresholdType: 'percent'
+    });
   });
 });
