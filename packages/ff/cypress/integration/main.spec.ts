@@ -37,7 +37,7 @@ describe('Main test', () => {
     //wait for aliased response
     // cy.wait('@getPlayerImages');
     cy.document().toMatchImageSnapshot({
-      threshold: 50, // Amount in pixels or percentage before snapshot image is invalid
+      threshold: 10,
       thresholdType: 'percent',
       name: 'mainTestGoalkeepers',
       createDiffImage: true
