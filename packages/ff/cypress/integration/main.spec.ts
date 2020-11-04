@@ -37,10 +37,7 @@ describe('Main test', () => {
     //wait for aliased response
     // cy.wait('@getPlayerImages');
     cy.document().toMatchImageSnapshot({
-      threshold: 10,
-      thresholdType: 'percent',
-      name: 'mainTestGoalkeepers',
-      createDiffImage: true
+      name: 'mainTestGoalkeepers'
     });
   });
 });
