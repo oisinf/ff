@@ -21,10 +21,10 @@ script:
 
 deploy:
   provider: script
+  #push tagged image to heroku registry
+  #release
   script:
-    #push tagged image to heroku registry
     docker push registry.heroku.com/$FANTASY_FOOTBALL_APP_NAME/web;
-    #release
     heroku container:release web --app $FANTASY_FOOTBALL_APP_NAME;
   api_key:
     secure: $HEROKU_API_KEY
