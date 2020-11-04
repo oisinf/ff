@@ -19,9 +19,6 @@ describe('Main test', () => {
     cy.dataQa('player-card').should('be.visible');
     cy.dataQa('player-team').should('contain', 'ARS');
     //TODO get snapshot working
-    // cy.document().toMatchImageSnapshot({
-    //   threshold: 5, // Amount in pixels or percentage before snapshot image is invalid
-    //   thresholdType: 'percent'
-    // });
+    cy.document().toMatchImageSnapshot();
   });
 });
