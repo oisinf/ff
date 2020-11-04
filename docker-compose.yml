@@ -15,9 +15,6 @@ services:
       - "80:5000"
     networks:
       - fantasy_football_network
-    environment:
-      - CYPRESS_PROJECT_ID=${CYPRESS_PROJECT_ID}
-      - CYPRESS_RECORD_KEY=${CYPRESS_RECORD_KEY}
 
 networks:
   fantasy_football_network:
