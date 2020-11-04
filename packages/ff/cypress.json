@@ -3,5 +3,6 @@
   "ignoreTestFiles": [
     "**/__snapshots__/*",
     "**/__image_snapshots__/*"
-  ]
+  ],
+  "projectId": "CYPRESS_PROJECT_ID"
 }
