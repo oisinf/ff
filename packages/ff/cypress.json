@@ -4,5 +4,5 @@
     "**/__snapshots__/*",
     "**/__image_snapshots__/*"
   ],
-  "projectId": "CYPRESS_TRAVIS_ID"
+  "projectId": "CYPRESS_PROJECT_ID"
 }
