@@ -6,7 +6,7 @@ before_install:
 
 script:
   #run tests
-  - docker run -e CI=true -e CYPRESS_PROJECT_ID=$CYPRESS_PROJECT_ID -e CYPRESS_RECORD_KEY=$CYPRESS_RECORD_KEY oisinf/fantasy_football:prod npm run ui_tests
+  - docker-compose run e2e
   #login in to docker
   - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
   #install heroku cli

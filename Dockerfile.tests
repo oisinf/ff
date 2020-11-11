@@ -1,0 +1,14 @@
+FROM cypress/base:10
+
+WORKDIR /app
+COPY tsconfig.json ./
+COPY lerna.json ./
+COPY package.json ./
+COPY ./packages/tests/ ./packages/tests/
+ENV CI=1
+#TODO Split up dependencies in parent package.json so that this npm i doesn't add unncessary deps
+RUN npm i
+RUN npm run bootstrap
+
+RUN npx cypress verify
+CMD ["npm", "run", "cypress:dashboard"]

@@ -36,8 +36,7 @@ describe('Main test', () => {
 
     //wait for aliased response
     // cy.wait('@getPlayerImages');
-    cy.document().toMatchImageSnapshot({
-      name: 'mainTestGoalkeepers'
-    });
+
+    cy.percySnapshot('End to end main');
   });
 });

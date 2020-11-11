@@ -1,13 +1,12 @@
 {
   "name": "ffproxy",
   "version": "1.0.0",
-  "description": "",
+  "author": "Oisin Feely",
+  "description": "Backend for ff app, mainly proxy request at the moment",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
     "start_proxy": "node src/index.js",
     "start_dev_proxy": "nodemon src/index.js"
   },
-  "author": "",
   "license": "ISC",
   "dependencies": {
     "axios": "^0.19.2",

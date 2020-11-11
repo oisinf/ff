@@ -1,0 +1,10 @@
+{
+  "scripts": {
+    "cypress:open": "cypress open",
+    "cypress:dashboard": "percy exec -- cypress run --record"
+  },
+  "devDependencies": {
+    "cypress": "^5.4.0",
+    "@percy/cypress": "^2.3.2"
+  }
+}

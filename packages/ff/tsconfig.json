@@ -2,14 +2,9 @@
   "extends": "../../tsconfig.json",
   "compilerOptions": {
     "outDir": "./lib",
-    "isolatedModules": false,
-    "types": [
-      "cypress",
-      "cypress-plugin-snapshots"
-    ]
+    "isolatedModules": true
   },
   "include": [
-    "src/",
-    "cypress/"
+    "src/"
   ]
 }

@@ -2,14 +2,11 @@
   "name": "ff",
   "version": "0.1.0",
   "private": true,
+  "description": "Frontend for fantasy football app",
+  "author": "Oisin Feely",
   "scripts": {
     "start_ff": "react-scripts start",
-    "build_ff_ui": "react-scripts build",
-    "test": "react-scripts test",
-    "eject": "react-scripts eject",
-    "cypress:open": "cypress open",
-    "cypress:run": "wait-on http://localhost:3000 && cypress run",
-    "cypress:dashboard_run": "wait-on http://localhost:3000 && cypress run --record"
+    "build_ff_ui": "react-scripts build"
   },
   "dependencies": {
     "@material-ui/core": "^4.11.0",
@@ -34,8 +31,6 @@
     "last 1 safari version"
   ],
   "devDependencies": {
-    "cypress": "^5.4.0",
-    "cypress-plugin-snapshots": "^1.4.4",
     "react-query-devtools": "^2.5.1"
   },
   "browserslist": {
