@@ -2,6 +2,9 @@
 
 - Aim of this is project is to create a fantasy football app to display info from the Premier league
 
+# Technologies/Libraries Used
+`Typescript, React, Lerna, Cypress, Percy, Eslint, Travis, Heroku, Storybook, Node, Express, Docker`
+
 # Goals
 
 Pretty open-ended but simply
@@ -14,9 +17,9 @@ Pretty open-ended but simply
 #Notes
 Using `Lerna` to manage monorepo structure which is split into `frontend` and `backend`.
 
-Currently frontend comprises `React` app which has some basic filtering for displaying data from public ff api.
+Currently frontend comprises `React` app which has some basic filtering for displaying data from public ff api. Also using `Storybook` to create components in isolation.
 
-Testing frontend with `Cypress`
+Testing frontend with `Cypress`, have created separate package for tests and `Dockerfile.tests` for testing service in `docker-compose.yml`, visual regression with `Percy`
 
 Backend is just a simple express app acts as a proxy for the frontend to retrieve ff info and player images. It also serves static frontend from build step
 
