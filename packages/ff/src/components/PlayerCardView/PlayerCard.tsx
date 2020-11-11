@@ -2,14 +2,13 @@ import React, { memo } from 'react';
 import { Card, CardContent, CardHeader, CircularProgress, createStyles, Grid, Theme, Typography } from '@material-ui/core';
 import { PlayerInfo } from '../PlayerGridView/PlayerGridView';
 import { makeStyles } from '@material-ui/core/styles';
-import { useQuery } from 'react-query';
 import photoMissing from './photoMissing.png';
-import axios from 'axios';
 
 export type PlayerCardProps = {
   player: PlayerInfo;
   playerTeam: string;
   playerPos: string;
+  img: string | null;
 };
 
 const useStyles = makeStyles((theme: Theme) =>
@@ -49,27 +48,26 @@ const useStyles = makeStyles((theme: Theme) =>
   })
 );
 
-const PlayerCard: React.FC<PlayerCardProps> = ({ player, playerPos, playerTeam }) => {
+const PlayerCard: React.FC<PlayerCardProps> = ({ player, playerPos, playerTeam, img }) => {
   const classes = useStyles();
 
-  const { error, isLoading, data } = useQuery(
-    `ff_image${player.id}`,
-    async (): Promise<string> => {
-      const res = await axios.get(`png/${player.photo}`);
-      return res.data;
-    }
-  );
-
   return (
-    <Grid item>
+    <Grid item data-qa="player-card">
       <Card className={classes.root}>
         <CardHeader title={player.web_name} className={classes.header} />
         <CardContent className={classes.cardContent}>
           <div className={classes.imgContainer}>
-            {isLoading && !data && !error && <CircularProgress size={80} color="secondary" />}
-            {(data || error) && <img className={classes.img} src={error ? photoMissing : data} alt={player.web_name} />}
-            <Typography variant="h6">{playerTeam}</Typography>
-            <Typography variant="body1">{playerPos}</Typography>
+            {img === 'LOADING' ? (
+              <CircularProgress size={80} color="secondary" />
+            ) : (
+              <img className={classes.img} src={img === 'not_found' || !img ? photoMissing : img} alt={player.web_name} />
+            )}
+            <Typography variant="h6" data-qa="player-team">
+              {playerTeam}
+            </Typography>
+            <Typography variant="body1" data-qa="player-position">
+              {playerPos}
+            </Typography>
           </div>
           <div className={classes.stats}>
             {(playerPos === 'GKP' || playerPos === 'DEF') && (

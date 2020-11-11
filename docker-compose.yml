@@ -2,17 +2,30 @@ version: "3.7"
 
 services:
 
-  fantasy_football:
+  fantasy_football_prod:
     image: oisinf/fantasy_football:prod
     build:
       context: .
       target: prod
-    container_name: fantasy_football
+    container_name: fantasy_football_prod
+    hostname: fantasy_football_prod
     restart: always
-    volumes:
-      - .:/app
     ports:
       - "80:5000"
+    networks:
+      - fantasy_football_network
+
+  e2e:
+    build:
+      context: .
+      dockerfile: Dockerfile.tests
+    depends_on:
+      - fantasy_football_prod
+    environment:
+      - CYPRESS_baseUrl=http://fantasy_football_prod:5000
+      - CYPRESS_RECORD_KEY=${CYPRESS_RECORD_KEY}
+      - CYPRESS_PROJECT_ID=${CYPRESS_PROJECT_ID}
+      - PERCY_TOKEN=${PERCY_TOKEN}
     networks:
       - fantasy_football_network
 

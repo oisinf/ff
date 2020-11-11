@@ -2,11 +2,11 @@
   "name": "ff",
   "version": "0.1.0",
   "private": true,
+  "description": "Frontend for fantasy football app",
+  "author": "Oisin Feely",
   "scripts": {
     "start_ff": "react-scripts start",
-    "build_ff_ui": "react-scripts build",
-    "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "build_ff_ui": "react-scripts build"
   },
   "dependencies": {
     "@material-ui/core": "^4.11.0",
@@ -31,12 +31,6 @@
     "last 1 safari version"
   ],
   "devDependencies": {
-    "@testing-library/react": "^9.5.0",
-    "@testing-library/react-hooks": "^3.4.1",
-    "@types/jest": "^24.9.1",
-    "install": "^0.13.0",
-    "jest": "^24.9.0",
-    "npm": "^6.14.8",
     "react-query-devtools": "^2.5.1"
   },
   "browserslist": {
