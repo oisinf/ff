@@ -54,7 +54,7 @@ const PlayerGridView: React.FC<PlayerGridViewProps> = ({ players, positions, tea
   const { state } = useContext(ContainerContext);
   const { isLoading, data }: QueryResult<Array<string>> = useQuery('ff_images', async () => {
     const pngs: string[] = players.map(p => p.photo);
-    const res = await axios.get('player_imgs', { params: { pngs } });
+    const res = await axios.post('player_imgs', { pngs });
     return res.data;
   });
   return (
