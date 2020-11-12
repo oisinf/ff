@@ -11,8 +11,8 @@ export default app => {
       return res.json(JSON.parse(body));
     });
   });
-  app.get('/player_imgs/', async (req, res) => {
-    const { pngs } = req.query;
+  app.post('/player_imgs', async (req, res) => {
+    const { pngs } = req.body;
     const data = await pngs.map(async id => {
       const src = id.replace('jpg', 'png');
       try {

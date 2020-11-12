@@ -2,9 +2,12 @@ import express from 'express';
 import http from 'http';
 import path from 'path';
 import routes from './routes.js';
+import bodyParser from 'body-parser';
 const app = express();
 
 const httpServer = http.createServer(app);
+app.use(bodyParser.urlencoded({ extended: true }));
+app.use(bodyParser.json());
 routes(app);
 
 if (process.env.NODE_ENV === 'production') {
