@@ -6,8 +6,8 @@ describe('Main test', () => {
 
     //stub images res
     cy.route({
-      method: 'GET',
-      url: '/player_imgs?**',
+      method: 'POST',
+      url: '/player_imgs',
       response: []
     });
 
