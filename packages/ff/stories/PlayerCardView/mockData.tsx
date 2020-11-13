@@ -1,7 +1,17 @@
 import { PlayerInfo } from '../../src/components/PlayerGridView/PlayerGridView';
 
 export const testPlayer: PlayerInfo = {
-  web_name: 'Test Name',
+  bonus: 10,
+  first_name: 'Test',
+  goals_conceded: 0,
+  news: 'Here is some news about stuff, pretty long, test player out till the 15th',
+  own_goals: 10,
+  penalties_saved: 10,
+  red_cards: 10,
+  saves: 10,
+  second_name: 'Name',
+  selected_by_percent: '50',
+  web_name: 'Test',
   photo: '37605.jpg',
   id: 1,
   goals_scored: 5,
@@ -13,7 +23,8 @@ export const testPlayer: PlayerInfo = {
   minutes: 5,
   element_type: 1,
   team: 1,
-  bps: 5
+  bps: 5,
+  penalties_missed: 10
 };
 
 export const imgFailPlayer: PlayerInfo = {

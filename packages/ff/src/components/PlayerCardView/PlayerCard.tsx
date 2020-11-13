@@ -2,7 +2,7 @@ import React, { memo } from 'react';
 import { Card, CardContent, CardHeader, CircularProgress, createStyles, Grid, Theme, Typography } from '@material-ui/core';
 import { PlayerInfo } from '../PlayerGridView/PlayerGridView';
 import { makeStyles } from '@material-ui/core/styles';
-import photoMissing from './photoMissing.png';
+import photoMissing from '../../assets/imgs/photoMissing.png';
 
 export type PlayerCardProps = {
   player: PlayerInfo;
