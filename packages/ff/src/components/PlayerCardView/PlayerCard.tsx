@@ -1,9 +1,12 @@
-import React, { memo } from 'react';
-import { Card, CardContent, CardHeader, CircularProgress, createStyles, Grid, Theme, Typography } from '@material-ui/core';
+import React, { memo, useContext } from 'react';
+import { Card, CardContent, CardHeader, CircularProgress, createStyles, Grid, IconButton, Theme, Typography } from '@material-ui/core';
 import { PlayerInfo } from '../PlayerGridView/PlayerGridView';
 import { makeStyles } from '@material-ui/core/styles';
 import photoMissing from '../../assets/imgs/photoMissing.png';
-
+import InfoIcon from '@material-ui/icons/Info';
+import { ContainerContext } from '../Container/Container';
+import { ContainerActionTypes } from '../../reducers/ContainerReducer';
+import { PlayerModalInfo } from '../PlayerInfoModal/PlayerModal';
 export type PlayerCardProps = {
   player: PlayerInfo;
   playerTeam: string;
@@ -32,9 +35,10 @@ const useStyles = makeStyles((theme: Theme) =>
     },
     cardContent: {
       display: 'flex',
-      flexDirection: 'row',
+      flexDirection: 'column',
       justifyContent: 'space-between',
-      paddingTop: '8px'
+      paddingTop: 8,
+      paddingBottom: '0px !important'
     },
     stats: {
       display: 'flex',
@@ -50,41 +54,55 @@ const useStyles = makeStyles((theme: Theme) =>
 
 const PlayerCard: React.FC<PlayerCardProps> = ({ player, playerPos, playerTeam, img }) => {
   const classes = useStyles();
+  const { dispatch } = useContext(ContainerContext);
 
   return (
     <Grid item data-qa="player-card">
       <Card className={classes.root}>
         <CardHeader title={player.web_name} className={classes.header} />
         <CardContent className={classes.cardContent}>
-          <div className={classes.imgContainer}>
-            {img === 'LOADING' ? (
-              <CircularProgress size={80} color="secondary" />
-            ) : (
-              <img className={classes.img} src={img === 'not_found' || !img ? photoMissing : img} alt={player.web_name} />
-            )}
-            <Typography variant="h6" data-qa="player-team">
-              {playerTeam}
-            </Typography>
-            <Typography variant="body1" data-qa="player-position">
-              {playerPos}
-            </Typography>
+          <div style={{ display: 'flex', flexDirection: 'row', justifyContent: 'space-between' }}>
+            <div className={classes.imgContainer}>
+              {img === 'LOADING' ? (
+                <CircularProgress size={80} color="secondary" />
+              ) : (
+                <img className={classes.img} src={img === 'not_found' || !img ? photoMissing : img} alt={player.web_name} />
+              )}
+              <Typography variant="h6" data-qa="player-team">
+                {playerTeam}
+              </Typography>
+              <Typography variant="body1" data-qa="player-position">
+                {playerPos}
+              </Typography>
+            </div>
+            <div className={classes.stats}>
+              {(playerPos === 'GKP' || playerPos === 'DEF') && (
+                <>
+                  <Info stat={player.clean_sheets} title="Sheets" />
+                  <Info stat={player.yellow_cards} title="Yellows" />
+                </>
+              )}
+              {(playerPos === 'ATK' || playerPos === 'MID') && (
+                <>
+                  <Info stat={player.goals_scored} title="Goals" />
+                  <Info stat={player.assists} title="Assists" />
+                </>
+              )}
+              <Info stat={player.total_points} title="Total" />
+              <Info stat={player.points_per_game} title="PPG" />
+            </div>
           </div>
-          <div className={classes.stats}>
-            {(playerPos === 'GKP' || playerPos === 'DEF') && (
-              <>
-                <Info stat={player.clean_sheets} title="Sheets" />
-                <Info stat={player.yellow_cards} title="Yellows" />
-              </>
-            )}
-            {(playerPos === 'ATK' || playerPos === 'MID') && (
-              <>
-                <Info stat={player.goals_scored} title="Goals" />
-                <Info stat={player.assists} title="Assists" />
-              </>
-            )}
-            <Info stat={player.total_points} title="Total" />
-            <Info stat={player.points_per_game} title="PPG" />
-          </div>
+          <IconButton
+            color="secondary"
+            onClick={() => {
+              dispatch({
+                type: ContainerActionTypes.OPEN_PLAYER_MODAL,
+                payload: { isModalOpen: true, playerInfo: { ...player, img, playerPos, playerTeam } } as PlayerModalInfo
+              });
+            }}
+          >
+            <InfoIcon />
+          </IconButton>
         </CardContent>
       </Card>
     </Grid>

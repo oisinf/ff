@@ -1,10 +1,11 @@
 import React, { useContext } from 'react';
-import { createStyles, Grid, Modal, Typography } from '@material-ui/core';
+import { Button, createStyles, Grid, Modal, Typography } from '@material-ui/core';
 import { ContainerContext } from '../Container/Container';
 import { makeStyles } from '@material-ui/core/styles';
 import photoMissing from '../../assets/imgs/photoMissing.png';
 import { PlayerInfo } from '../PlayerGridView/PlayerGridView';
 import { KeyLabel, labels } from './labels';
+import { ContainerActionTypes } from '../../reducers/ContainerReducer';
 
 export type PlayerInfoModalProps = {};
 
@@ -23,16 +24,19 @@ const useStyles = makeStyles(theme =>
     root: {
       position: 'relative',
       width: '80vw',
-      height: '70vh',
+      minHeight: '50vh',
+      maxHeight: '70vh',
       borderRadius: 10,
       backgroundColor: theme.palette.primary.light,
       margin: '15vh 10vw 15vh 10vw',
-      overflow: 'scroll'
+      overflow: 'scroll',
+      paddingBottom: 32
     },
     title: { paddingTop: 12, color: theme.palette.primary.contrastText, width: 'fit-content', margin: '0 auto 0 auto', height: '10%' },
     info: {
       color: theme.palette.primary.contrastText,
-      padding: 4
+      padding: 4,
+      marginTop: 'auto'
     },
     infoText: {
       margin: 'auto',
@@ -45,7 +49,8 @@ const PlayerModal: React.FC<PlayerInfoModalProps> = () => {
   const {
     state: {
       playerModalInfo: { isModalOpen, playerInfo }
-    }
+    },
+    dispatch
   } = useContext(ContainerContext);
   const classes = useStyles();
 
@@ -59,7 +64,11 @@ const PlayerModal: React.FC<PlayerInfoModalProps> = () => {
             </Typography>
             <Grid container spacing={2} direction={'row'} justify={'flex-start'} className={classes.info}>
               <Grid item xs={12} lg={4} style={{ display: 'flex', flexDirection: 'column' }}>
-                <img style={{ height: 250, width: 250, margin: 'auto' }} src={playerInfo.img ?? photoMissing} alt="Player Photo" />
+                <img
+                  style={{ height: 250, width: 250, margin: 'auto' }}
+                  src={playerInfo.img === 'not_found' || !playerInfo.img || playerInfo.img === 'LOADING' ? photoMissing : playerInfo.img}
+                  alt="Player"
+                />
                 <Typography className={classes.infoText} variant="h3">
                   {playerInfo.playerTeam}
                 </Typography>
@@ -94,6 +103,23 @@ const PlayerModal: React.FC<PlayerInfoModalProps> = () => {
             </Grid>
           </>
         )}
+        <Button
+          variant="contained"
+          style={{ margin: '0 50% 0 50%', width: 'fit-content' }}
+          color="secondary"
+          size="large"
+          onClick={() => {
+            dispatch({
+              type: ContainerActionTypes.OPEN_PLAYER_MODAL,
+              payload: {
+                isModalOpen: false,
+                playerInfo: null
+              }
+            });
+          }}
+        >
+          Close
+        </Button>
       </div>
     </Modal>
   );

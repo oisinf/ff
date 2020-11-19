@@ -2,7 +2,7 @@ import { createStyles, FormControl, InputLabel, MenuItem, Paper, Select, Theme }
 import React, { useContext } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import { PosInfo, TeamInfo } from '../PlayerGridView/PlayerGridView';
-import { ContainerActionTypes, VALUE_ALL } from '../../reducers/ContainerReducer';
+import { ContainerActionTypes } from '../../reducers/ContainerReducer';
 import { ContainerContext } from '../Container/Container';
 export type FilterCardProps = {
   teams: Array<TeamInfo>;
@@ -46,7 +46,7 @@ const FilterCard: React.FC<FilterCardProps> = ({ teams, positions }) => {
           onChange={e =>
             dispatch({
               type: ContainerActionTypes.POSITION,
-              payload: e.target.value === VALUE_ALL ? (e.target.value as string) : (e.target.value as number)
+              payload: e.target.value as string | number
             })
           }
         >
@@ -68,7 +68,7 @@ const FilterCard: React.FC<FilterCardProps> = ({ teams, positions }) => {
           onChange={e =>
             dispatch({
               type: ContainerActionTypes.TEAM,
-              payload: e.target.value === VALUE_ALL ? (e.target.value as string) : (e.target.value as number)
+              payload: e.target.value as string | number
             })
           }
         >
