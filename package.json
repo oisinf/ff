@@ -8,7 +8,7 @@
     "start_prod_server": "lerna run start_proxy",
     "storybook": "start-storybook -p 6006",
     "build-storybook": "build-storybook",
-    "percy_snapshot": "build-storybook && percy-storybook --widths=320,1400",
+    "percy_snapshot": "build-storybook &&  PERCY_TOKEN={$PERCY_TOKEN} percy-storybook --widths=320,1400 ",
     "fe": "lerna run start_ff",
     "be": "lerna run start_proxy",
     "start_fe_be": "concurrently 'npm run fe' 'npm run be' -k -s first",
