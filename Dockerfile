@@ -10,6 +10,7 @@ COPY ./packages/ffProxy ./packages/ffProxy
 RUN npm install
 RUN npm run bootstrap
 RUN npm run build_ff_ui
+RUN npp run percy_snapshots
 
 FROM builder as dev
 CMD ["npm", "run", "start_fe_be"]
