@@ -14,6 +14,12 @@ services:
       - "80:5000"
     networks:
       - fantasy_football_network
+
+
+  percy_snapshot:
+    build:
+      context: .
+      target: percy_snapshot
     environment:
       - PERCY_TOKEN=${PERCY_TOKEN}
 
