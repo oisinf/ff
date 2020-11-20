@@ -1,7 +1,7 @@
 FROM node:14 as builder
 
 WORKDIR /app
-ENV  SKIP_PREFLIGHT_CHECK=true
+ENV SKIP_PREFLIGHT_CHECK=true
 COPY tsconfig.json ./
 COPY package*.json ./
 COPY lerna.json ./
@@ -21,8 +21,3 @@ ENV NODE_ENV=production
 COPY ./packages/ffProxy/ ./packages/ffProxy/
 COPY --from=builder ./app/packages/ff/build ./packages/ff/build/
 CMD ["npm", "run", "start_prod_server"]
-
-
-
-
-
