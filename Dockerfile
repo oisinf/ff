@@ -7,6 +7,7 @@ COPY package*.json ./
 COPY lerna.json ./
 COPY ./packages/ff ./packages/ff
 COPY ./packages/ffProxy ./packages/ffProxy
+COPY ./.storybook ./.storybook
 RUN npm install
 RUN npm run bootstrap
 RUN npm run build_ff_ui
