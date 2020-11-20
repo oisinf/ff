@@ -2,6 +2,7 @@ FROM node:14 as builder
 
 WORKDIR /app
 ENV SKIP_PREFLIGHT_CHECK=true
+ENV PERCY_TOKEN=${PERCY_TOKEN}
 COPY tsconfig.json ./
 COPY package*.json ./
 COPY lerna.json ./

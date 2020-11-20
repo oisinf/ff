@@ -14,8 +14,6 @@ services:
       - "80:5000"
     networks:
       - fantasy_football_network
-    environment:
-      - PERCY_TOKEN=${PERCY_TOKEN}
 
   e2e:
     build:
