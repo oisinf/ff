@@ -37,5 +37,6 @@ WithoutImageAndMid.args = {
 export const Loading = Template.bind({});
 Loading.args = {
   player: testPlayer,
-  playerPos: 'GKP'
+  playerPos: 'GKP',
+  img: 'LOADING'
 };

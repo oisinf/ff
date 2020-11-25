@@ -1,7 +1,7 @@
 import React, { memo, useReducer } from 'react';
 import { QueryResult, useQuery } from 'react-query';
 import axios, { AxiosResponse } from 'axios';
-import { FilterCard, PlayerGridView } from '../index';
+import { FilterCard, PlayerGridView, PlayerModal } from '../index';
 import { PlayerInfo, PosInfo, TeamInfo } from '../PlayerGridView/PlayerGridView';
 import { makeStyles } from '@material-ui/core/styles';
 import { CircularProgress, createStyles, Typography } from '@material-ui/core';
@@ -62,6 +62,7 @@ const Container: React.FC = () => {
           <div className={classes.root}>
             <FilterCard teams={data.teams} positions={data.element_types} />
             <PlayerGridView players={data.elements} teams={data.teams} positions={data.element_types} />
+            <PlayerModal />
           </div>
         </ContainerContext.Provider>
       )}

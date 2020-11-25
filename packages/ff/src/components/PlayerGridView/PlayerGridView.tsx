@@ -26,6 +26,17 @@ export type PlayerInfo = {
   yellow_cards: number;
   minutes: number;
   bps: number;
+  first_name: string;
+  second_name: string;
+  goals_conceded: number;
+  red_cards: number;
+  saves: number;
+  penalties_saved: number;
+  own_goals: number;
+  bonus: number;
+  news: string;
+  selected_by_percent: string;
+  penalties_missed: number;
 };
 
 export type TeamInfo = {

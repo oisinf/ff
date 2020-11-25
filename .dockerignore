@@ -1,9 +1,7 @@
 node_modules
 **/node_modules
-**/stories
 packages/ff/build
 .git
-.storybook
 .idea
 .vscode
 node_modules/
