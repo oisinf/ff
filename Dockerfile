@@ -19,6 +19,4 @@ CMD ["npm", "run", "percy_snapshot"]
 
 FROM builder as prod
 ENV NODE_ENV=production
-COPY ./packages/ffProxy/ ./packages/ffProxy/
-COPY --from=builder ./app/packages/ff/build ./packages/ff/build/
 CMD ["npm", "run", "start_prod_server"]
