@@ -57,7 +57,7 @@ const PlayerCard: React.FC<PlayerCardProps> = ({ player, playerPos, playerTeam, 
   const { dispatch } = useContext(ContainerContext);
 
   return (
-    <Grid item data-qa="player-card">
+    <Grid item data-qa="player_card">
       <Card className={classes.root}>
         <CardHeader title={player.web_name} className={classes.header} />
         <CardContent className={classes.cardContent}>
@@ -68,10 +68,10 @@ const PlayerCard: React.FC<PlayerCardProps> = ({ player, playerPos, playerTeam, 
               ) : (
                 <img className={classes.img} src={img === 'not_found' || !img ? photoMissing : img} alt={player.web_name} />
               )}
-              <Typography variant="h6" data-qa="player-team">
+              <Typography variant="h6" data-qa="player_team">
                 {playerTeam}
               </Typography>
-              <Typography variant="body1" data-qa="player-position">
+              <Typography variant="body1" data-qa="player_position">
                 {playerPos}
               </Typography>
             </div>

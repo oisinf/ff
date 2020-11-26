@@ -4,6 +4,9 @@ import { makeStyles } from '@material-ui/core/styles';
 import { PosInfo, TeamInfo } from '../PlayerGridView/PlayerGridView';
 import { ContainerActionTypes } from '../../reducers/ContainerReducer';
 import { ContainerContext } from '../Container/Container';
+
+import { labels } from '../../assets/labels/labels';
+
 export type FilterCardProps = {
   teams: Array<TeamInfo>;
   positions: Array<PosInfo>;
@@ -39,7 +42,7 @@ const FilterCard: React.FC<FilterCardProps> = ({ teams, positions }) => {
   const { state, dispatch } = useContext(ContainerContext);
   return (
     <Paper className={classes.root}>
-      <FormControl className={classes.formControl} data-qa="filter-position">
+      <FormControl className={classes.formControl} data-qa="filter_position">
         <InputLabel className={classes.label}>Position</InputLabel>
         <Select
           value={state.position}
@@ -61,7 +64,7 @@ const FilterCard: React.FC<FilterCardProps> = ({ teams, positions }) => {
             })}
         </Select>
       </FormControl>
-      <FormControl className={classes.formControl} data-qa="filter-team">
+      <FormControl className={classes.formControl} data-qa="filter_team">
         <InputLabel className={classes.label}>Team</InputLabel>
         <Select
           value={state.team}
@@ -83,12 +86,20 @@ const FilterCard: React.FC<FilterCardProps> = ({ teams, positions }) => {
             })}
         </Select>
       </FormControl>
-      {/*    <FormControl className={classes.formControl}>
+      <FormControl className={classes.formControl} data-qa="filter_stats">
         <InputLabel className={classes.label}>Stat</InputLabel>
-        <Select value={''}>
-          <MenuItem value="test">Test</MenuItem>
+        <Select
+          value={state.stat}
+          onChange={e => dispatch({ type: ContainerActionTypes.STAT, payload: e.target.value as string | undefined })}
+        >
+          <MenuItem value={undefined}>None</MenuItem>
+          {labels.map(val => (
+            <MenuItem key={val.key} value={val.key}>
+              {val.label}
+            </MenuItem>
+          ))}
         </Select>
-      </FormControl>*/}
+      </FormControl>
     </Paper>
   );
 };

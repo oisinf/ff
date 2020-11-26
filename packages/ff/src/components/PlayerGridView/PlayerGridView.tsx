@@ -6,6 +6,7 @@ import { ContainerContext } from '../Container/Container';
 import { VALUE_ALL } from '../../reducers/ContainerReducer';
 import { QueryResult, useQuery } from 'react-query';
 import axios from 'axios';
+
 export type PlayerGridViewProps = {
   players: Array<PlayerInfo>;
   teams: Array<TeamInfo>;
@@ -13,6 +14,7 @@ export type PlayerGridViewProps = {
 };
 
 export type PlayerInfo = {
+  base64_photo: string | undefined;
   web_name: string;
   photo: string;
   id: number;
@@ -63,32 +65,44 @@ const useStyles = makeStyles((theme: Theme) =>
 const PlayerGridView: React.FC<PlayerGridViewProps> = ({ players, positions, teams }) => {
   const classes = useStyles();
   const { state } = useContext(ContainerContext);
-  const { isLoading, data }: QueryResult<Array<string>> = useQuery('ff_images', async () => {
+  const { isLoading, data }: QueryResult<{ [p: number]: string }> = useQuery('ff_images', async () => {
     const pngs: string[] = players.map(p => p.photo);
     const res = await axios.post('player_imgs', { pngs });
-    return res.data;
+    const playerIdImgs: { [key: number]: string } = {};
+    players.forEach((info, i) => {
+      playerIdImgs[info.id] = res.data[i];
+    });
+    return playerIdImgs;
   });
   return (
     <>
       <Grid container spacing={4} className={classes.root} justify="space-evenly">
-        {players.map((playerInfo, index) => {
-          if (
-            (state.team === VALUE_ALL && state.position === VALUE_ALL) ||
-            (state.team === playerInfo.team && state.position === VALUE_ALL) ||
-            (state.team === VALUE_ALL && state.position === playerInfo.element_type) ||
-            (state.team === playerInfo.team && state.position === playerInfo.element_type)
-          ) {
-            return (
-              <PlayerCard
-                player={playerInfo}
-                playerTeam={teams[playerInfo.team - 1].short_name}
-                playerPos={positions[playerInfo.element_type - 1].singular_name_short}
-                key={index}
-                img={isLoading ? 'LOADING' : data?.[index] ?? null}
-              />
-            );
-          } else return undefined;
-        })}
+        {players
+          .sort((a: PlayerInfo, b: PlayerInfo) => {
+            if (state.stat) {
+              return (b[state.stat as keyof PlayerInfo] as number) - (a[state.stat as keyof PlayerInfo] as number);
+            }
+            return 0;
+          })
+
+          .map((playerInfo, index) => {
+            if (
+              (state.team === VALUE_ALL && state.position === VALUE_ALL) ||
+              (state.team === playerInfo.team && state.position === VALUE_ALL) ||
+              (state.team === VALUE_ALL && state.position === playerInfo.element_type) ||
+              (state.team === playerInfo.team && state.position === playerInfo.element_type)
+            ) {
+              return (
+                <PlayerCard
+                  player={playerInfo}
+                  playerTeam={teams[playerInfo.team - 1].short_name}
+                  playerPos={positions[playerInfo.element_type - 1].singular_name_short}
+                  key={index}
+                  img={isLoading ? 'LOADING' : data?.[playerInfo.id] ?? null}
+                />
+              );
+            } else return undefined;
+          })}
       </Grid>
     </>
   );

@@ -4,7 +4,7 @@ import { ContainerContext } from '../Container/Container';
 import { makeStyles } from '@material-ui/core/styles';
 import photoMissing from '../../assets/imgs/photoMissing.png';
 import { PlayerInfo } from '../PlayerGridView/PlayerGridView';
-import { KeyLabel, labels } from './labels';
+import { KeyLabel, labels } from '../../assets/labels/labels';
 import { ContainerActionTypes } from '../../reducers/ContainerReducer';
 
 export type PlayerInfoModalProps = {};
