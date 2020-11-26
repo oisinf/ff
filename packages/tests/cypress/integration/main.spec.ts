@@ -37,6 +37,13 @@ describe('Main test', () => {
     //wait for aliased response
     // cy.wait('@getPlayerImages');
 
-    cy.percySnapshot('End to end main');
+    cy.percySnapshot('Display Arsenal goalkeepers from filter by position/team');
+
+    cy.dataQa('info_button_Leno').click();
+    cy.dataQa('player_modal');
+
+    cy.percySnapshot('Display player modal with correct info');
+    cy.dataQa('player_modal_close_button').click();
+    cy.percySnapshot('Display Arsenal goalkeepers after close modal');
   });
 });

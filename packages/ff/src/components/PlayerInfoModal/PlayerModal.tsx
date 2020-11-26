@@ -56,7 +56,7 @@ const PlayerModal: React.FC<PlayerInfoModalProps> = () => {
 
   return (
     <Modal open={isModalOpen}>
-      <div className={classes.root}>
+      <div className={classes.root} data-qa="player_modal">
         {playerInfo && (
           <>
             <Typography className={classes.title} variant="h4">
@@ -117,6 +117,7 @@ const PlayerModal: React.FC<PlayerInfoModalProps> = () => {
               }
             });
           }}
+          data-qa="player_modal_close_button"
         >
           Close
         </Button>

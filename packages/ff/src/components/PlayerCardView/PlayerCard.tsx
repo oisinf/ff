@@ -100,6 +100,7 @@ const PlayerCard: React.FC<PlayerCardProps> = ({ player, playerPos, playerTeam, 
                 payload: { isModalOpen: true, playerInfo: { ...player, img, playerPos, playerTeam } } as PlayerModalInfo
               });
             }}
+            data-qa={`info_button_${player.web_name}`}
           >
             <InfoIcon />
           </IconButton>
