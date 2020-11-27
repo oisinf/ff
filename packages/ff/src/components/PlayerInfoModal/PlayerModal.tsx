@@ -1,11 +1,12 @@
-import React, { useContext } from 'react';
+import React from 'react';
 import { Button, createStyles, Grid, Modal, Typography } from '@material-ui/core';
-import { ContainerContext } from '../Container/Container';
 import { makeStyles } from '@material-ui/core/styles';
 import photoMissing from '../../assets/imgs/photoMissing.png';
 import { PlayerInfo } from '../PlayerGridView/PlayerGridView';
 import { KeyLabel, labels } from '../../assets/labels/labels';
-import { ContainerActionTypes } from '../../reducers/ContainerReducer';
+import { setPlayerModalInfo } from '../../slices/playerInfoSlice';
+import { RootState } from '../../configureStore';
+import { useDispatch, useSelector } from 'react-redux';
 
 export type PlayerInfoModalProps = {};
 
@@ -46,14 +47,9 @@ const useStyles = makeStyles(theme =>
 );
 
 const PlayerModal: React.FC<PlayerInfoModalProps> = () => {
-  const {
-    state: {
-      playerModalInfo: { isModalOpen, playerInfo }
-    },
-    dispatch
-  } = useContext(ContainerContext);
+  const { isModalOpen, playerInfo } = useSelector((state: RootState) => state.container.playerModalInfo);
   const classes = useStyles();
-
+  const dispatch = useDispatch();
   return (
     <Modal open={isModalOpen}>
       <div className={classes.root} data-qa="player_modal">
@@ -109,13 +105,14 @@ const PlayerModal: React.FC<PlayerInfoModalProps> = () => {
           color="secondary"
           size="large"
           onClick={() => {
-            dispatch({
-              type: ContainerActionTypes.OPEN_PLAYER_MODAL,
-              payload: {
-                isModalOpen: false,
-                playerInfo: null
-              }
-            });
+            dispatch(
+              setPlayerModalInfo({
+                modalInfo: {
+                  isModalOpen: false,
+                  playerInfo: null
+                }
+              })
+            );
           }}
           data-qa="player_modal_close_button"
         >

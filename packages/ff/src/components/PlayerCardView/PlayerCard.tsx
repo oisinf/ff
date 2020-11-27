@@ -1,12 +1,12 @@
-import React, { memo, useContext } from 'react';
+import React, { memo } from 'react';
 import { Card, CardContent, CardHeader, CircularProgress, createStyles, Grid, IconButton, Theme, Typography } from '@material-ui/core';
 import { PlayerInfo } from '../PlayerGridView/PlayerGridView';
 import { makeStyles } from '@material-ui/core/styles';
 import photoMissing from '../../assets/imgs/photoMissing.png';
 import InfoIcon from '@material-ui/icons/Info';
-import { ContainerContext } from '../Container/Container';
-import { ContainerActionTypes } from '../../reducers/ContainerReducer';
-import { PlayerModalInfo } from '../PlayerInfoModal/PlayerModal';
+import { setPlayerModalInfo } from '../../slices/playerInfoSlice';
+import { useDispatch } from 'react-redux';
+
 export type PlayerCardProps = {
   player: PlayerInfo;
   playerTeam: string;
@@ -54,8 +54,7 @@ const useStyles = makeStyles((theme: Theme) =>
 
 const PlayerCard: React.FC<PlayerCardProps> = ({ player, playerPos, playerTeam, img }) => {
   const classes = useStyles();
-  const { dispatch } = useContext(ContainerContext);
-
+  const dispatch = useDispatch();
   return (
     <Grid item data-qa="player_card">
       <Card className={classes.root}>
@@ -95,10 +94,11 @@ const PlayerCard: React.FC<PlayerCardProps> = ({ player, playerPos, playerTeam, 
           <IconButton
             color="secondary"
             onClick={() => {
-              dispatch({
-                type: ContainerActionTypes.OPEN_PLAYER_MODAL,
-                payload: { isModalOpen: true, playerInfo: { ...player, img, playerPos, playerTeam } } as PlayerModalInfo
-              });
+              dispatch(
+                setPlayerModalInfo({
+                  modalInfo: { isModalOpen: true, playerInfo: { ...player, img, playerPos, playerTeam } }
+                })
+              );
             }}
             data-qa={`info_button_${player.web_name}`}
           >

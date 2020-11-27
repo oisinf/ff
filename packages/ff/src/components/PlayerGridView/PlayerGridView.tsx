@@ -1,11 +1,13 @@
-import React, { memo, useContext } from 'react';
+import React, { memo } from 'react';
 import { createStyles, Grid, Theme } from '@material-ui/core';
 import PlayerCard from '../PlayerCardView/PlayerCard';
 import { makeStyles } from '@material-ui/core/styles';
-import { ContainerContext } from '../Container/Container';
-import { VALUE_ALL } from '../../reducers/ContainerReducer';
+import { VALUE_ALL } from '../../slices/playerInfoSlice';
 import { QueryResult, useQuery } from 'react-query';
 import axios from 'axios';
+import { RootState } from '../../configureStore';
+import { useDispatch, useSelector } from 'react-redux';
+import { setElements } from '../../slices/apiResSlice';
 
 export type PlayerGridViewProps = {
   players: Array<PlayerInfo>;
@@ -62,47 +64,57 @@ const useStyles = makeStyles((theme: Theme) =>
   })
 );
 
-const PlayerGridView: React.FC<PlayerGridViewProps> = ({ players, positions, teams }) => {
-  const classes = useStyles();
-  const { state } = useContext(ContainerContext);
-  const { isLoading, data }: QueryResult<{ [p: number]: string }> = useQuery('ff_images', async () => {
-    const pngs: string[] = players.map(p => p.photo);
-    const res = await axios.post('player_imgs', { pngs });
-    const playerIdImgs: { [key: number]: string } = {};
-    players.forEach((info, i) => {
-      playerIdImgs[info.id] = res.data[i];
+const sortPlayers = (team: string | number, position: string | number, stat: string | undefined, players: PlayerInfo[]) => {
+  return players
+    .slice()
+    .sort((a: PlayerInfo, b: PlayerInfo) => {
+      if (stat) {
+        return (b[stat as keyof PlayerInfo] as number) - (a[stat as keyof PlayerInfo] as number);
+      }
+      return 0;
+    })
+    .filter(playerInfo => {
+      if (
+        (team === VALUE_ALL && position === VALUE_ALL) ||
+        (team === playerInfo.team && position === VALUE_ALL) ||
+        (team === VALUE_ALL && position === playerInfo.element_type) ||
+        (team === playerInfo.team && position === playerInfo.element_type)
+      ) {
+        return playerInfo;
+      } else return undefined;
     });
-    return playerIdImgs;
+};
+
+const PlayerGridView: React.FC<PlayerGridViewProps> = () => {
+  const classes = useStyles();
+  const dispatch = useDispatch();
+  const sortedPlayers = useSelector((state: RootState) =>
+    sortPlayers(state.container.team, state.container.position, state.container.stat, state.apiResponse.elements)
+  );
+  const { teams, element_types, elements } = useSelector((state: RootState) => state.apiResponse);
+
+  const { isLoading }: QueryResult<void> = useQuery('ff_images', async () => {
+    const pngs: string[] = elements.map(p => p.photo);
+    const res = await axios.post('player_imgs', { pngs });
+    const updatedElements = elements.map((info, i) => {
+      return (info.base64_photo = res.data[i]);
+    });
+    dispatch(setElements(updatedElements));
   });
   return (
     <>
       <Grid container spacing={4} className={classes.root} justify="space-evenly">
-        {players
-          .sort((a: PlayerInfo, b: PlayerInfo) => {
-            if (state.stat) {
-              return (b[state.stat as keyof PlayerInfo] as number) - (a[state.stat as keyof PlayerInfo] as number);
-            }
-            return 0;
-          })
-
-          .map((playerInfo, index) => {
-            if (
-              (state.team === VALUE_ALL && state.position === VALUE_ALL) ||
-              (state.team === playerInfo.team && state.position === VALUE_ALL) ||
-              (state.team === VALUE_ALL && state.position === playerInfo.element_type) ||
-              (state.team === playerInfo.team && state.position === playerInfo.element_type)
-            ) {
-              return (
-                <PlayerCard
-                  player={playerInfo}
-                  playerTeam={teams[playerInfo.team - 1].short_name}
-                  playerPos={positions[playerInfo.element_type - 1].singular_name_short}
-                  key={index}
-                  img={isLoading ? 'LOADING' : data?.[playerInfo.id] ?? null}
-                />
-              );
-            } else return undefined;
-          })}
+        {sortedPlayers.map((playerInfo, index) => {
+          return (
+            <PlayerCard
+              player={playerInfo}
+              playerTeam={teams[playerInfo.team - 1].short_name}
+              playerPos={element_types[playerInfo.element_type - 1].singular_name_short}
+              key={index}
+              img={isLoading ? 'LOADING' : playerInfo.base64_photo ?? null}
+            />
+          );
+        })}
       </Grid>
     </>
   );

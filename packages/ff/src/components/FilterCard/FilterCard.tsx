@@ -1,11 +1,12 @@
 import { createStyles, FormControl, InputLabel, MenuItem, Paper, Select, Theme } from '@material-ui/core';
-import React, { useContext } from 'react';
+import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import { PosInfo, TeamInfo } from '../PlayerGridView/PlayerGridView';
-import { ContainerActionTypes } from '../../reducers/ContainerReducer';
-import { ContainerContext } from '../Container/Container';
 
 import { labels } from '../../assets/labels/labels';
+import { RootState } from '../../configureStore';
+import { useDispatch, useSelector } from 'react-redux';
+import { setPosition, setStat, setTeam } from '../../slices/playerInfoSlice';
 
 export type FilterCardProps = {
   teams: Array<TeamInfo>;
@@ -39,20 +40,14 @@ const useStyles = makeStyles((theme: Theme) =>
 
 const FilterCard: React.FC<FilterCardProps> = ({ teams, positions }) => {
   const classes = useStyles();
-  const { state, dispatch } = useContext(ContainerContext);
+
+  const dispatch = useDispatch();
+  const { position, team, stat } = useSelector((state: RootState) => state.container);
   return (
     <Paper className={classes.root}>
       <FormControl className={classes.formControl} data-qa="filter_position">
         <InputLabel className={classes.label}>Position</InputLabel>
-        <Select
-          value={state.position}
-          onChange={e =>
-            dispatch({
-              type: ContainerActionTypes.POSITION,
-              payload: e.target.value as string | number
-            })
-          }
-        >
+        <Select value={position} onChange={e => dispatch(setPosition({ position: e.target.value as string | number }))}>
           <MenuItem value={'All'}>All</MenuItem>
           {positions &&
             positions.map((p, i) => {
@@ -67,12 +62,13 @@ const FilterCard: React.FC<FilterCardProps> = ({ teams, positions }) => {
       <FormControl className={classes.formControl} data-qa="filter_team">
         <InputLabel className={classes.label}>Team</InputLabel>
         <Select
-          value={state.team}
+          value={team}
           onChange={e =>
-            dispatch({
-              type: ContainerActionTypes.TEAM,
-              payload: e.target.value as string | number
-            })
+            dispatch(
+              setTeam({
+                team: e.target.value as string | number
+              })
+            )
           }
         >
           <MenuItem value={'All'}>All</MenuItem>
@@ -88,10 +84,7 @@ const FilterCard: React.FC<FilterCardProps> = ({ teams, positions }) => {
       </FormControl>
       <FormControl className={classes.formControl} data-qa="filter_stats">
         <InputLabel className={classes.label}>Stat</InputLabel>
-        <Select
-          value={state.stat}
-          onChange={e => dispatch({ type: ContainerActionTypes.STAT, payload: e.target.value as string | undefined })}
-        >
+        <Select value={stat} onChange={e => dispatch(setStat({ stat: e.target.value as string | undefined }))}>
           <MenuItem value={undefined}>None</MenuItem>
           {labels.map(val => (
             <MenuItem key={val.key} value={val.key}>

@@ -11,15 +11,19 @@
   "dependencies": {
     "@material-ui/core": "^4.11.0",
     "@material-ui/icons": "^4.9.1",
+    "@reduxjs/toolkit": "^1.4.0",
     "@types/react": "16.9.5",
     "@types/react-dom": "16.9.1",
     "@types/react-query": "^1.1.2",
+    "@types/react-redux": "^7.1.11",
     "axios": "^0.19.2",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
     "react-hot-loader": "^4.12.21",
     "react-query": "^2.23.0",
-    "react-scripts": "^3.4.3"
+    "react-redux": "^7.2.2",
+    "react-scripts": "^3.4.3",
+    "redux": "^4.0.5"
   },
   "production": [
     ">0.2%",
@@ -32,7 +36,9 @@
     "last 1 safari version"
   ],
   "devDependencies": {
-    "react-query-devtools": "^2.5.1"
+    "react-query-devtools": "^2.5.1",
+    "redux-devtools": "^3.7.0",
+    "redux-devtools-extension": "^2.13.8"
   },
   "browserslist": {
     "production": [
