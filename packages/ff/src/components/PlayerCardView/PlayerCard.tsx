@@ -6,12 +6,12 @@ import photoMissing from '../../assets/imgs/photoMissing.png';
 import InfoIcon from '@material-ui/icons/Info';
 import { setPlayerModalInfo } from '../../slices/playerInfoSlice';
 import { useDispatch } from 'react-redux';
-
+import { useQuery } from 'react-query';
+import axios from 'axios';
 export type PlayerCardProps = {
   player: PlayerInfo;
   playerTeam: string;
   playerPos: string;
-  img: string | null;
 };
 
 const useStyles = makeStyles((theme: Theme) =>
@@ -52,9 +52,18 @@ const useStyles = makeStyles((theme: Theme) =>
   })
 );
 
-const PlayerCard: React.FC<PlayerCardProps> = ({ player, playerPos, playerTeam, img }) => {
+const PlayerCard: React.FC<PlayerCardProps> = ({ player, playerPos, playerTeam }) => {
   const classes = useStyles();
   const dispatch = useDispatch();
+
+  const { error, isLoading, data } = useQuery(
+    `ff_image${player.id}`,
+    async (): Promise<string> => {
+      const res = await axios.get(`png/${player.photo}`);
+      return res.data;
+    }
+  );
+
   return (
     <Grid item data-qa="player_card">
       <Card className={classes.root}>
@@ -62,10 +71,10 @@ const PlayerCard: React.FC<PlayerCardProps> = ({ player, playerPos, playerTeam, 
         <CardContent className={classes.cardContent}>
           <div style={{ display: 'flex', flexDirection: 'row', justifyContent: 'space-between' }}>
             <div className={classes.imgContainer}>
-              {img === 'LOADING' ? (
+              {isLoading ? (
                 <CircularProgress size={80} color="secondary" />
               ) : (
-                <img className={classes.img} src={img === 'not_found' || !img ? photoMissing : img} alt={player.web_name} />
+                <img className={classes.img} src={error ? photoMissing : data} alt={player.web_name} />
               )}
               <Typography variant="h6" data-qa="player_team">
                 {playerTeam}
@@ -96,7 +105,7 @@ const PlayerCard: React.FC<PlayerCardProps> = ({ player, playerPos, playerTeam, 
             onClick={() => {
               dispatch(
                 setPlayerModalInfo({
-                  modalInfo: { isModalOpen: true, playerInfo: { ...player, img, playerPos, playerTeam } }
+                  modalInfo: { isModalOpen: true, playerInfo: { ...player, img: data ?? null, playerPos, playerTeam } }
                 })
               );
             }}

@@ -1,82 +1,51 @@
 describe('Main test', () => {
-  it('should display player cards, filter players by team/position correctly (full e2e)', () => {
+  it('should display player cards, filter players by team/position/stats correctly', () => {
     cy.visit('/');
 
     cy.server();
 
-    //stub images res
-    cy.route({
-      method: 'POST',
-      url: '/player_imgs',
-      response: []
-    });
-
-    //alias images responses
-    // cy.route({
-    //   method: 'GET',
-    //   url: '/player_imgs?**'
-    // }).as('getPlayerImages');
-
     cy.contains('Fantasy Football');
     cy.contains('Loading...');
 
-    cy.dataQa('filter_position').click();
-    cy.contains('Goalkeeper').click();
+    cy.route('/football-stuff', 'fixture:matchweek10DataDump.json').as('getAllData');
+    cy.wait('@getAllData');
+    cy.wait(10000);
 
-    cy.dataQa('filter_position').should('contain', 'Goalkeeper');
+    cy.dataQa('filter_position').click();
+    cy.dataQa('filter_position').click();
+
+    cy.contains('Defender').click();
+
+    cy.dataQa('filter_position').should('contain', 'Defender');
     cy.dataQa('player_card').should('be.visible');
-    cy.dataQa('player_position').should('contain', 'GKP');
+    cy.dataQa('player_position').should('contain', 'DEF');
 
     cy.dataQa('filter_team').click();
-    cy.contains('Arsenal').click();
+    cy.contains('Chelsea').click();
 
-    cy.dataQa('filter_team').should('contain', 'Arsenal');
+    cy.dataQa('filter_team').should('contain', 'Chelsea');
     cy.dataQa('player_card').should('be.visible');
-    cy.dataQa('player_team').should('contain', 'ARS');
+    cy.dataQa('player_team').should('contain', 'CHE');
 
-    //wait for aliased response
-    // cy.wait('@getPlayerImages');
+    cy.percySnapshot('Display Chelsea defenders from filter by position/team');
 
-    cy.percySnapshot('Display Arsenal goalkeepers from filter by position/team');
-
-    cy.dataQa('info_button_Leno').click();
+    cy.dataQa('info_button_Chilwell').click();
     cy.dataQa('player_modal');
 
     cy.percySnapshot('Display player modal with correct info');
     cy.dataQa('player_modal_close_button').click();
-    cy.percySnapshot('Display Arsenal goalkeepers after close modal');
-  });
-
-  it('should display cards and filter by stats with mock data', () => {
-    cy.visit('/');
-
-    cy.server();
-
-    cy.contains('Fantasy Football');
-    cy.contains('Loading...');
-
-    cy.percySnapshot('Loading icon displayed as no data');
-
-    //stub data and img res
-    cy.route('/football-stuff', 'fixture:matchweek10DataDump.json').as('getAllData');
-    cy.route({
-      method: 'POST',
-      url: '/player_imgs',
-      response: []
-    });
-
-    cy.percySnapshot('Display cards with mock data data');
+    cy.percySnapshot('Display Chelsea defenders after close modal');
 
     cy.dataQa('filter_stats').click();
     cy.contains('Points Per Game').click();
 
-    cy.percySnapshot('Players should be orderd by points per game');
+    cy.percySnapshot('Players should be ordered by points per game');
 
-    cy.dataQa('info_button_Kane').click();
+    cy.dataQa('info_button_Chilwell').click();
     cy.dataQa('player_modal');
 
     cy.percySnapshot('Display player modal with correct info');
     cy.dataQa('player_modal_close_button').click();
-    cy.percySnapshot('Display Arsenal goalkeepers after close modal');
+    cy.percySnapshot('Display Chelsea goalkeepers after close modal');
   });
 });

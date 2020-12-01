@@ -3,11 +3,8 @@ import { createStyles, Grid, Theme } from '@material-ui/core';
 import PlayerCard from '../PlayerCardView/PlayerCard';
 import { makeStyles } from '@material-ui/core/styles';
 import { VALUE_ALL } from '../../slices/playerInfoSlice';
-import { QueryResult, useQuery } from 'react-query';
-import axios from 'axios';
 import { RootState } from '../../configureStore';
-import { useDispatch, useSelector } from 'react-redux';
-import { setElements } from '../../slices/apiResSlice';
+import { useSelector } from 'react-redux';
 
 export type PlayerGridViewProps = {
   players: Array<PlayerInfo>;
@@ -87,20 +84,11 @@ const sortPlayers = (team: string | number, position: string | number, stat: str
 
 const PlayerGridView: React.FC<PlayerGridViewProps> = () => {
   const classes = useStyles();
-  const dispatch = useDispatch();
   const sortedPlayers = useSelector((state: RootState) =>
     sortPlayers(state.container.team, state.container.position, state.container.stat, state.apiResponse.elements)
   );
-  const { teams, element_types, elements } = useSelector((state: RootState) => state.apiResponse);
+  const { teams, element_types } = useSelector((state: RootState) => state.apiResponse);
 
-  const { isLoading }: QueryResult<void> = useQuery('ff_images', async () => {
-    const pngs: string[] = elements.map(p => p.photo);
-    const res = await axios.post('player_imgs', { pngs });
-    const updatedElements = elements.map((info, i) => {
-      return (info.base64_photo = res.data[i]);
-    });
-    dispatch(setElements(updatedElements));
-  });
   return (
     <>
       <Grid container spacing={4} className={classes.root} justify="space-evenly">
@@ -111,7 +99,6 @@ const PlayerGridView: React.FC<PlayerGridViewProps> = () => {
               playerTeam={teams[playerInfo.team - 1].short_name}
               playerPos={element_types[playerInfo.element_type - 1].singular_name_short}
               key={index}
-              img={isLoading ? 'LOADING' : playerInfo.base64_photo ?? null}
             />
           );
         })}
