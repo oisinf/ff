@@ -1,11 +1,11 @@
-import React, { memo, useContext } from 'react';
+import React, { memo } from 'react';
 import { createStyles, Grid, Theme } from '@material-ui/core';
 import PlayerCard from '../PlayerCardView/PlayerCard';
 import { makeStyles } from '@material-ui/core/styles';
-import { ContainerContext } from '../Container/Container';
-import { VALUE_ALL } from '../../reducers/ContainerReducer';
-import { QueryResult, useQuery } from 'react-query';
-import axios from 'axios';
+import { VALUE_ALL } from '../../slices/playerInfoSlice';
+import { RootState } from '../../configureStore';
+import { useSelector } from 'react-redux';
+
 export type PlayerGridViewProps = {
   players: Array<PlayerInfo>;
   teams: Array<TeamInfo>;
@@ -13,6 +13,7 @@ export type PlayerGridViewProps = {
 };
 
 export type PlayerInfo = {
+  base64_photo: string | undefined;
   web_name: string;
   photo: string;
   id: number;
@@ -60,34 +61,46 @@ const useStyles = makeStyles((theme: Theme) =>
   })
 );
 
-const PlayerGridView: React.FC<PlayerGridViewProps> = ({ players, positions, teams }) => {
+const sortPlayers = (team: string | number, position: string | number, stat: string | undefined, players: PlayerInfo[]) => {
+  return players
+    .slice()
+    .sort((a: PlayerInfo, b: PlayerInfo) => {
+      if (stat) {
+        return (b[stat as keyof PlayerInfo] as number) - (a[stat as keyof PlayerInfo] as number);
+      }
+      return 0;
+    })
+    .filter(playerInfo => {
+      if (
+        (team === VALUE_ALL && position === VALUE_ALL) ||
+        (team === playerInfo.team && position === VALUE_ALL) ||
+        (team === VALUE_ALL && position === playerInfo.element_type) ||
+        (team === playerInfo.team && position === playerInfo.element_type)
+      ) {
+        return playerInfo;
+      } else return undefined;
+    });
+};
+
+const PlayerGridView: React.FC<PlayerGridViewProps> = () => {
   const classes = useStyles();
-  const { state } = useContext(ContainerContext);
-  const { isLoading, data }: QueryResult<Array<string>> = useQuery('ff_images', async () => {
-    const pngs: string[] = players.map(p => p.photo);
-    const res = await axios.post('player_imgs', { pngs });
-    return res.data;
-  });
+  const sortedPlayers = useSelector((state: RootState) =>
+    sortPlayers(state.container.team, state.container.position, state.container.stat, state.apiResponse.elements)
+  );
+  const { teams, element_types } = useSelector((state: RootState) => state.apiResponse);
+
   return (
     <>
       <Grid container spacing={4} className={classes.root} justify="space-evenly">
-        {players.map((playerInfo, index) => {
-          if (
-            (state.team === VALUE_ALL && state.position === VALUE_ALL) ||
-            (state.team === playerInfo.team && state.position === VALUE_ALL) ||
-            (state.team === VALUE_ALL && state.position === playerInfo.element_type) ||
-            (state.team === playerInfo.team && state.position === playerInfo.element_type)
-          ) {
-            return (
-              <PlayerCard
-                player={playerInfo}
-                playerTeam={teams[playerInfo.team - 1].short_name}
-                playerPos={positions[playerInfo.element_type - 1].singular_name_short}
-                key={index}
-                img={isLoading ? 'LOADING' : data?.[index] ?? null}
-              />
-            );
-          } else return undefined;
+        {sortedPlayers.map((playerInfo, index) => {
+          return (
+            <PlayerCard
+              player={playerInfo}
+              playerTeam={teams[playerInfo.team - 1].short_name}
+              playerPos={element_types[playerInfo.element_type - 1].singular_name_short}
+              key={index}
+            />
+          );
         })}
       </Grid>
     </>

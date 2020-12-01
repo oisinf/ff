@@ -3,5 +3,7 @@
   "ignoreTestFiles": [
     "**/__snapshots__/*"
   ],
-  "projectId": "CYPRESS_PROJECT_ID"
+  "projectId": "CYPRESS_PROJECT_ID",
+  "viewportWidth": 1920,
+  "viewportHeight": 1080
 }

@@ -11,24 +11,17 @@ export default app => {
       return res.json(JSON.parse(body));
     });
   });
-  app.post('/player_imgs', async (req, res) => {
-    const { pngs } = req.body;
-    const data = await pngs.map(async id => {
-      const src = id.replace('jpg', 'png');
-      try {
-        const axiosResponse = await axios.get(`https://resources.premierleague.com/premierleague/photos/players/40x40/p${src}`, {
-          responseType: 'arraybuffer'
-        });
-        return `data:${axiosResponse.headers['content-type']};base64,${Buffer.from(
-          String.fromCharCode(...new Uint8Array(axiosResponse.data)),
+  app.get(`/png/:id`, (req, res) => {
+    const playerID = req.params.id.replace('jpg', 'png');
+    axios
+      .get(`https://resources.premierleague.com/premierleague/photos/players/40x40/p${playerID}`, { responseType: 'arraybuffer' })
+      .then(axRes => {
+        const base64 = `data:${axRes.headers['content-type']};base64,${Buffer.from(
+          String.fromCharCode(...new Uint8Array(axRes.data)),
           'binary'
         ).toString('base64')}`;
-      } catch {
-        return 'not_found';
-      }
-    });
-    Promise.all(data).then(result => {
-      res.send(result);
-    });
+        res.send(base64);
+      })
+      .catch(e => res.status(500).json({ type: 'error', message: e }));
   });
 };

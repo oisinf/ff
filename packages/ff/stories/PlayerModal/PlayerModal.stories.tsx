@@ -1,34 +1,25 @@
-import { ThemeProvider } from '@material-ui/core';
-import React, { useReducer } from 'react';
+import React from 'react';
 import { PlayerModal } from '../../src/components';
-import { theme } from '../../src/Theme';
 import { Story } from '@storybook/react';
-import { ContainerContext } from '../../src/components/Container/Container';
-import reducer, { initialState } from '../../src/reducers/ContainerReducer';
 import { PlayerInfoModalProps } from '../../src/components/PlayerInfoModal/PlayerModal';
-import { testPlayer } from '../PlayerCardView/mockData';
+import { setPlayerModalInfo } from '../../src/slices/playerInfoSlice';
+import { useDispatch } from 'react-redux';
+import { base64Img, testPlayer } from '../PlayerCardView/mockData';
 
 export default {
   title: 'Player Modal',
   component: PlayerModal
 };
 
-const StoryWrapper = (args: PlayerInfoModalProps) => {
-  const [state, dispatch] = useReducer(reducer, {
-    ...initialState,
-    playerModalInfo: { isModalOpen: true, playerInfo: { ...testPlayer, img: null, playerPos: 'GKP', playerTeam: 'ARS' } }
-  });
-  return (
-    <ContainerContext.Provider value={{ state, dispatch }}>
-      <PlayerModal {...args} />
-    </ContainerContext.Provider>
+const Template: Story<PlayerInfoModalProps> = args => {
+  const dispatch = useDispatch();
+  dispatch(
+    setPlayerModalInfo({
+      modalInfo: { isModalOpen: true, playerInfo: { ...testPlayer, img: base64Img, playerTeam: 'ARS', playerPos: 'GKP' } }
+    })
   );
+  return <PlayerModal {...args} />;
 };
-const Template: Story<PlayerInfoModalProps> = args => (
-  <ThemeProvider theme={theme}>
-    <StoryWrapper {...args} />
-  </ThemeProvider>
-);
 
 export const PlayerInfoModalStory = Template.bind({});
 PlayerInfoModalStory.args = {};

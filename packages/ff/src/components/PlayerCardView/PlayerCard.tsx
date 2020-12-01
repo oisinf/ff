@@ -1,17 +1,17 @@
-import React, { memo, useContext } from 'react';
+import React, { memo } from 'react';
 import { Card, CardContent, CardHeader, CircularProgress, createStyles, Grid, IconButton, Theme, Typography } from '@material-ui/core';
 import { PlayerInfo } from '../PlayerGridView/PlayerGridView';
 import { makeStyles } from '@material-ui/core/styles';
 import photoMissing from '../../assets/imgs/photoMissing.png';
 import InfoIcon from '@material-ui/icons/Info';
-import { ContainerContext } from '../Container/Container';
-import { ContainerActionTypes } from '../../reducers/ContainerReducer';
-import { PlayerModalInfo } from '../PlayerInfoModal/PlayerModal';
+import { setPlayerModalInfo } from '../../slices/playerInfoSlice';
+import { useDispatch } from 'react-redux';
+import { useQuery } from 'react-query';
+import axios from 'axios';
 export type PlayerCardProps = {
   player: PlayerInfo;
   playerTeam: string;
   playerPos: string;
-  img: string | null;
 };
 
 const useStyles = makeStyles((theme: Theme) =>
@@ -52,26 +52,34 @@ const useStyles = makeStyles((theme: Theme) =>
   })
 );
 
-const PlayerCard: React.FC<PlayerCardProps> = ({ player, playerPos, playerTeam, img }) => {
+const PlayerCard: React.FC<PlayerCardProps> = ({ player, playerPos, playerTeam }) => {
   const classes = useStyles();
-  const { dispatch } = useContext(ContainerContext);
+  const dispatch = useDispatch();
+
+  const { error, isLoading, data } = useQuery(
+    `ff_image${player.id}`,
+    async (): Promise<string> => {
+      const res = await axios.get(`png/${player.photo}`);
+      return res.data;
+    }
+  );
 
   return (
-    <Grid item data-qa="player-card">
+    <Grid item data-qa="player_card">
       <Card className={classes.root}>
         <CardHeader title={player.web_name} className={classes.header} />
         <CardContent className={classes.cardContent}>
           <div style={{ display: 'flex', flexDirection: 'row', justifyContent: 'space-between' }}>
             <div className={classes.imgContainer}>
-              {img === 'LOADING' ? (
+              {isLoading ? (
                 <CircularProgress size={80} color="secondary" />
               ) : (
-                <img className={classes.img} src={img === 'not_found' || !img ? photoMissing : img} alt={player.web_name} />
+                <img className={classes.img} src={error ? photoMissing : data} alt={player.web_name} />
               )}
-              <Typography variant="h6" data-qa="player-team">
+              <Typography variant="h6" data-qa="player_team">
                 {playerTeam}
               </Typography>
-              <Typography variant="body1" data-qa="player-position">
+              <Typography variant="body1" data-qa="player_position">
                 {playerPos}
               </Typography>
             </div>
@@ -95,11 +103,13 @@ const PlayerCard: React.FC<PlayerCardProps> = ({ player, playerPos, playerTeam, 
           <IconButton
             color="secondary"
             onClick={() => {
-              dispatch({
-                type: ContainerActionTypes.OPEN_PLAYER_MODAL,
-                payload: { isModalOpen: true, playerInfo: { ...player, img, playerPos, playerTeam } } as PlayerModalInfo
-              });
+              dispatch(
+                setPlayerModalInfo({
+                  modalInfo: { isModalOpen: true, playerInfo: { ...player, img: data ?? null, playerPos, playerTeam } }
+                })
+              );
             }}
+            data-qa={`info_button_${player.web_name}`}
           >
             <InfoIcon />
           </IconButton>

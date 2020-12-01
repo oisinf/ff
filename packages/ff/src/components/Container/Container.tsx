@@ -1,11 +1,13 @@
-import React, { memo, useReducer } from 'react';
+import React, { memo } from 'react';
 import { QueryResult, useQuery } from 'react-query';
 import axios, { AxiosResponse } from 'axios';
 import { FilterCard, PlayerGridView, PlayerModal } from '../index';
 import { PlayerInfo, PosInfo, TeamInfo } from '../PlayerGridView/PlayerGridView';
 import { makeStyles } from '@material-ui/core/styles';
 import { CircularProgress, createStyles, Typography } from '@material-ui/core';
-import reducer, { ContainerAction, ContainerState, initialState } from '../../reducers/ContainerReducer';
+import { useDispatch, useSelector } from 'react-redux';
+import { RootState } from '../../configureStore';
+import { setContainerState } from '../../slices/apiResSlice';
 
 const useStyles = makeStyles(() =>
   createStyles({
@@ -27,25 +29,20 @@ export type FootballInfo = {
   teams: Array<TeamInfo>;
 };
 
-export const ContainerContext = React.createContext<{ state: ContainerState; dispatch: React.Dispatch<ContainerAction> }>({
-  state: initialState,
-  dispatch: () => null
-});
-
 const Container: React.FC = () => {
   const classes = useStyles();
-  const [state, dispatch] = useReducer(reducer, initialState);
-
-  const { isLoading, isError, data }: QueryResult<FootballInfo> = useQuery('ff_request', async () => {
-    const res: AxiosResponse<FootballInfo> = await axios.get<FootballInfo>('football-stuff');
-    return res.data;
+  const dispatch = useDispatch();
+  const { teams, element_types, elements } = useSelector((state: RootState) => state.apiResponse);
+  const { isLoading, isError }: QueryResult<void> = useQuery('ff_request', async () => {
+    if (elements.length === 0) {
+      const res: AxiosResponse<FootballInfo> = await axios.get<FootballInfo>('football-stuff');
+      dispatch(setContainerState(res.data));
+    }
   });
-
-  console.log('here is the data', data);
 
   return (
     <>
-      {(isLoading || isError) && !data && (
+      {(isLoading || isError) && elements.length < 1 && (
         <div>
           {isLoading ? (
             <div className={classes.errorDiv}>
@@ -57,14 +54,12 @@ const Container: React.FC = () => {
           )}
         </div>
       )}
-      {data && !isLoading && !isError && (
-        <ContainerContext.Provider value={{ state, dispatch }}>
-          <div className={classes.root}>
-            <FilterCard teams={data.teams} positions={data.element_types} />
-            <PlayerGridView players={data.elements} teams={data.teams} positions={data.element_types} />
-            <PlayerModal />
-          </div>
-        </ContainerContext.Provider>
+      {elements && !isLoading && !isError && (
+        <div className={classes.root}>
+          <FilterCard teams={teams} positions={element_types} />
+          <PlayerGridView players={elements} teams={teams} positions={element_types} />
+          <PlayerModal />
+        </div>
       )}
     </>
   );
