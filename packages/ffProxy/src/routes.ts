@@ -1,7 +1,8 @@
 import request from 'request';
 import axios from 'axios';
+import { Express } from 'express';
 
-export default app => {
+export default (app: Express) => {
   app.get('/football-stuff', async (req, res) => {
     // TODO: Convert to use axios (using request even though deprecated as for some reason axios is just returning an empty string)
     request({ url: 'https://fantasy.premierleague.com/api/bootstrap-static/' }, (error, response, body) => {
